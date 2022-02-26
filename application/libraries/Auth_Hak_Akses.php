@@ -29,6 +29,7 @@ class Auth_Hak_Akses
     }
 
     //disallow mungkin butuh dibalik casenya
+    //perlu diutak atik lagi
     function checkUrlWildcard($url, $whiteListUrls = [])
     {
         foreach ($whiteListUrls as $wUrl) {
