@@ -1,0 +1,10 @@
+{
+    "loadingRecords": "<h4><i class="fas fa-spinner"></i></h4>",
+    "processing":     "<h4><i class="fas fa-spinner"></i></h4>",
+    "paginate": {
+        "first":      "<i class="fas fa-angle-double-left"></i>",
+        "last":       "<i class="fas fa-angle-double-right"></i>",
+        "next":       "<i class="fas fa-angle-right"></i>",
+        "previous":   "<i class="fas fa-angle-left"></i>"
+    }
+}
