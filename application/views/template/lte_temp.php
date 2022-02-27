@@ -98,7 +98,7 @@
                              $treeview = '  ';
                             if (isset($row['child'])) {
                                
-                                $is_child_active = check_child(get_uri_arr(1), $row['child']);
+                                $is_child_active = check_child(uri_segment2(1), $row['child']);
                                 if ($is_child_active) {
                                     $is_open = ' menu-is-opening menu-open ';
                                     $treeview = ' style="display: block;" ';
@@ -114,7 +114,7 @@
                                     $url = base_url($row['url']);
                                 }
                                 $is_active = '';
-                                if (get_uri_arr(1) == trim($row['url'], '/')) {
+                                if (uri_segment2(1) == trim($row['url'], '/')) {
                                     $is_active = ' active ';
                                 }
                                 ?>
@@ -133,7 +133,7 @@
                                             <li class="nav-item">
                                                 <?php
                                                 $is_active = '';
-                                                if (get_uri_arr(1) == trim($row2['url'], '/')) {
+                                                if (uri_segment2(1) == trim($row2['url'], '/')) {
                                                     $is_active = ' active ';
                                                 }
                                                 ?>

@@ -412,11 +412,11 @@ function sorting_btn_fa3($base_url = '', $sort_col = '')
     return $html;
 }
 
-function get_uri_arr()
+function uri_segment2($key)
 {
     $ci = &get_instance();
 
-    $segment2=strtolower(uri_string());
+    $segment2 = $ci->uri->segment($key);
 
     return $segment2;
 }

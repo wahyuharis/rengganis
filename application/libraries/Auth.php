@@ -36,10 +36,9 @@ class Auth
         $ci = &get_instance();
         $ci->load->library('Auth_Hak_Akses');
         $hak_akses=new Auth_Hak_Akses();
-        $hak_akses->is_disallow_urls();
+        $hak_akses->cek_hak_akses();
 
-        if(!$hak_akses->is_disallow_urls()){
-            // session_destroy();
+        if(!$hak_akses->cek_hak_akses()){
             $ci->session->set_flashdata('error_message', 'Maaf Anda Tidak memiliki Akses');
             redirect('home');
         }

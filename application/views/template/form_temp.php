@@ -31,7 +31,7 @@ $action = '#';
             </div>
         </div>
         <?= form_submit('save', 'simpan', ' class="btn btn-primary" ') ?>
-        <?= anchor(base_url(), 'batal', ' class="btn btn-secondary" ') ?>
+        <?= anchor(base_url($base_url), 'batal', ' class="btn btn-secondary" ') ?>
         <?= form_close() ?>
     </div>
 </div>
@@ -84,7 +84,7 @@ $action = '#';
             success: function(data) // A function to be called if request succeeds
             {
                 if (data.success) {
-                    // window.location = '<?= base_url($base_url) ?>';
+                    window.location = '<?= base_url($base_url) ?>';
                     console.log(data);
                 } else {
                     toastr.error(data.message);
