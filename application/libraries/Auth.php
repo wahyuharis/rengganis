@@ -25,7 +25,8 @@ class Auth
         $ci->db->where('password', $password);
         $db = $ci->db->get('_user');
         if ($db->num_rows() < 1) {
-            session_destroy();
+            
+            // session_reset();
             $ci->session->set_flashdata('error_message', 'Maaf Anda Belum Login');
             redirect('login');
         }

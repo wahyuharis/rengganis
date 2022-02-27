@@ -6,7 +6,22 @@ class Login extends CI_Controller
 
 	public function index()
 	{
+		$this->is_logged_in();
 		$this->load->view('template/login');
+	}
+
+	function is_logged_in()
+	{
+		$username = $this->session->userdata('username');
+		$password = $this->session->userdata('password');
+
+		$this->db->where('username', $username);
+		$this->db->where('password', $password);
+		$db = $this->db->get('_user');
+		if ($db->num_rows() > 0) {
+
+			redirect('home');
+		}
 	}
 
 	function submit()
