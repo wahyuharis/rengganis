@@ -14,16 +14,28 @@ class Upload_templib extends CI_Controller
 	public function index()
 	{
 		// print_r2($_FILES);
-		$config['upload_path']          = './assets/upload/';
+		$success = false;
+		$data = array();
+		$error = array();
+		$message = '';
+
+		$config['upload_path']          = './uploads/';
 		$config['allowed_types']        = 'gif|jpg|png|pdf';
 		$this->load->library('upload', $config);
 		if (!$this->upload->do_upload('image')) {
 			$error = $this->upload->display_errors();
-			print_r2($error);
-
 		} else {
 			$data = $this->upload->data();
-			print_r2($data);
+			$success=true;
 		}
+
+		header_json();
+		$response = array(
+			'success' => $success,
+			'data' => $data,
+			'error' => $error,
+			'message' => $message,
+		);
+		echo json_encode($response);
 	}
 }
