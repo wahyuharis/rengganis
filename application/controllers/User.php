@@ -95,11 +95,12 @@ class User extends CI_Controller
 		echo json_encode($response);
 	}
 
-	function add(){
+	function add()
+	{
 		$this->edit('');
 	}
 
-	function edit($primary_id='')
+	function edit($primary_id = '')
 	{
 		$this->load->library('Form_templib');
 
@@ -119,6 +120,7 @@ class User extends CI_Controller
 		$form_templib->text_input('fullname', 'fullname', '');
 		$form_templib->select_input('Jabatan', 'jabatan', [1 => 'admin', 2 => 'user'], '');
 		// $form_templib->select_input_multiple('Jabatan2', 'jabatan2', [1 => 'admin', 2 => 'user'], '');
+		
 		$form_templib->set_col1();
 		//column 1 end
 
@@ -126,7 +128,7 @@ class User extends CI_Controller
 		//column 2 start
 		// $form_templib->date_input('datesample', 'datesample', '');
 		// $form_templib->daterange_input('daterangesample', 'daterangesample', '');
-		$form_templib->form_upload('Foto','foto','');
+		$form_templib->form_upload('Foto', 'foto', '');
 		$form_templib->textarea_input('alamat', 'alamat', '');
 		$form_templib->set_col2();
 		//column 2 end
@@ -134,7 +136,7 @@ class User extends CI_Controller
 
 		$html = $form_templib->generate();
 
-		$html.=load_view_html('user/edit_custom_script');
+		$html .= load_view_html('user/edit_custom_script');
 
 		$template->set_content_html($html);
 		$template->set_title_page($page_title);
@@ -182,7 +184,7 @@ class User extends CI_Controller
 		if ($success) {
 			if (empty(trim($primary_id))) {
 				//add
-				$set=array();
+				$set = array();
 				$set['username'] = in_post('username');
 				$set['email'] = in_post('email');
 				$set['fullname'] = in_post('fullname');
@@ -193,17 +195,17 @@ class User extends CI_Controller
 				$this->db->insert('_user', $set);
 			} else {
 				//edit
-				$set=array();
+				$set = array();
 				$set['username'] = in_post('username');
 				$set['email'] = in_post('email');
 				$set['fullname'] = in_post('fullname');
 				$set['id_jabatan'] = in_post('jabatan');
 
-				$where=array(
+				$where = array(
 					'id_user' => $primary_id,
 				);
 
-				$this->db->update('_user',$set,$where);
+				$this->db->update('_user', $set, $where);
 			}
 		}
 

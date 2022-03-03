@@ -118,16 +118,19 @@ class Form_templib
     {
         $ci = &get_instance();
 
-        $html = '
-        <div class="form-group">
-                    <label for="'.$name.'">'.$label.'</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="'.$name.'">
-                        <label class="custom-file-label" for="'.$name.'">Choose file</label>
-                      </div>
-                    </div>
-                  </div>';
+        $html = '';
+        // $html = '
+        // <div class="form-group">
+        //     <label for="' . $name . '" >' . $label . '</label>
+        //     ' . form_input($name, $value, ' class="form-control" id="' . $name . '" placeholder="' . $label . '" ') . '
+        //     <input type="file" class="form-control-file border" name="'. $name .'-uploader">
+        // </div>';
+        $dataviews = array(
+            'name' => $name,
+            'value' => $value,
+            'label' => $label,
+        );
+        $html .= $ci->load->view('template/file_upload', $dataviews,true);
 
         array_push($this->form_buff, $html);
 
