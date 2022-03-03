@@ -95,7 +95,11 @@ class User extends CI_Controller
 		echo json_encode($response);
 	}
 
-	function add()
+	function add(){
+		$this->edit('');
+	}
+
+	function edit($primary_id='')
 	{
 		$this->load->library('Form_templib');
 
@@ -105,10 +109,12 @@ class User extends CI_Controller
 
 		$form_templib->set_submit_url('user/submit');
 		$form_templib->set_base_url('user');
+		$form_templib->set_form_title($page_title);
 
 		//column 1 start
 		$form_templib->hidden_input('id_user', '');
 		$form_templib->text_input('username', 'username', '');
+		$form_templib->password_input('password', 'password', '');
 		$form_templib->text_input('email', 'email', '');
 		$form_templib->text_input('fullname', 'fullname', '');
 		$form_templib->select_input('Jabatan', 'jabatan', [1 => 'admin', 2 => 'user'], '');
@@ -120,12 +126,15 @@ class User extends CI_Controller
 		//column 2 start
 		// $form_templib->date_input('datesample', 'datesample', '');
 		// $form_templib->daterange_input('daterangesample', 'daterangesample', '');
+		$form_templib->form_upload('Foto','foto','');
 		$form_templib->textarea_input('alamat', 'alamat', '');
 		$form_templib->set_col2();
 		//column 2 end
 
 
 		$html = $form_templib->generate();
+
+		$html.=load_view_html('user/edit_custom_script');
 
 		$template->set_content_html($html);
 		$template->set_title_page($page_title);

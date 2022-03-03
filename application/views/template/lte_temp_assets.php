@@ -17,6 +17,8 @@
   <!-- Tempusdominus Bootstrap 4 -->
 <link rel="stylesheet" href="<?=base_url('lte/')?>plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 
+<!-- BS Fileinput -->
+
   <!-- Tostr -->
 <link rel="stylesheet" href="<?=base_url()?>/node_modules/toastr/build/toastr.min.css">
   
@@ -38,6 +40,9 @@
 <script src="<?= base_url('lte/') ?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- moment js -->
 <script src="<?=base_url('lte/')?>plugins/moment/moment.min.js"></script>
+
+<script src="<?=base_url('lte/')?>plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
 
 
 <!-- DataTables  & Plugins -->

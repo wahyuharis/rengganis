@@ -4,6 +4,7 @@ class Auth
     function __construct()
     {
         $ci = &get_instance();
+        
         if (!(in_array(strtolower($ci->uri->segment(1)), ['login', 'logout']))) {
             $this->is_login();
 

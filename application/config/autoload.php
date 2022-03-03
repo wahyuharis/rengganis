@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
@@ -60,7 +60,11 @@ $autoload['packages'] = array();
 */
 //$autoload['libraries'] = array();
 
-$autoload['libraries'] = array('database', 'session','LTE_Temp','Datatables_templib','Auth');
+if (is_cli()) {
+    $autoload['libraries'] = array('database');
+} else {
+    $autoload['libraries'] = array('database', 'session', 'LTE_Temp', 'Datatables_templib', 'Auth');
+}
 /*
 | -------------------------------------------------------------------
 |  Auto-load Drivers
@@ -91,7 +95,7 @@ $autoload['drivers'] = array();
 |	$autoload['helper'] = array('url', 'file');
 */
 //$autoload['helper'] = array();
-$autoload['helper'] = array('url', 'file','form','haris','lte_temp');
+$autoload['helper'] = array('url', 'file', 'form', 'haris', 'lte_temp');
 /*
 | -------------------------------------------------------------------
 |  Auto-load Config files
