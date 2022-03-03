@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col-12">
             <label for="<?= $name ?>_uploader"><?= $label ?></label><br>
-            <label class="btn btn-block btn-primary" for="<?= $name ?>_uploader">Upload</label>
-            <input type="file" class="d-none" name="<?= $name ?>_uploader" id="<?= $name ?>_uploader">
+            <label id="btn_<?= $name ?>_uploader" class="btn btn-block btn-primary" for="<?= $name ?>_uploader">Upload</label>
+            <input type="file" class="d-none"  id="<?= $name ?>_uploader">
         </div>
     </div>
     <div class="row">
@@ -11,9 +11,9 @@
             <input type="text" name="<?= $name ?>" id="<?= $name ?>" value="<?= $value ?>" class="d-none form-control">
         </div>
         <div class="col-12" id="preview">
-            <img id="img-preview" style="max-height: 100px;" src="#" class="d-none">
-            <a id="pdf-preview" href="#" class="d-none"></a>
-            <span id="delete" class="btn btn-danger float-right">Delete</span>
+            <img id="img-preview_<?= $name ?>" style="max-height: 100px;" src="#" class="d-none">
+            <a id="pdf-preview_<?= $name ?>" href="#" class="d-none"></a>
+            <span id="delete_file_<?= $name ?>" class="btn btn-danger float-right d-none">Delete</span>
         </div>
     </div>
 </div>
@@ -37,25 +37,58 @@
                         if (response.success) {
                             $('#<?= $name ?>').val(response.data.file_name);
                             if (response.data.is_image) {
-                                $('#img-preview').attr('src', '<?= base_url('uploads') ?>/' + response.data.file_name);
-                                $('#img-preview').removeClass('d-none');
-                                $('#pdf-preview').addClass('d-none');
+                                $('#img-preview_<?= $name ?>').attr('src', '<?= base_url('uploads') ?>/' + response.data.file_name);
+                                $('#img-preview_<?= $name ?>').removeClass('d-none');
+                                $('#pdf-preview_<?= $name ?>').addClass('d-none');
+                                $('#delete_file_<?= $name ?>').removeClass('d-none');
+
                             } else {
-                                $('#pdf-preview').attr('href', '<?= base_url('uploads') ?>/' + response.data.file_name);
-                                $('#pdf-preview').html(response.data.file_name);
-                                $('#pdf-preview').removeClass('d-none');
-                                $('#img-preview').addClass('d-none');
+                                $('#pdf-preview_<?= $name ?>').attr('href', '<?= base_url('uploads') ?>/' + response.data.file_name);
+                                $('#pdf-preview_<?= $name ?>').html(response.data.file_name);
+                                $('#pdf-preview_<?= $name ?>').removeClass('d-none');
+                                $('#img-preview_<?= $name ?>').addClass('d-none');
+                                $('#delete_file_<?= $name ?>').removeClass('d-none');
                             }
+                            $('#btn_<?= $name ?>_uploader').addClass('d-none');
+                            $('#delete_file_<?= $name ?>').attr('file_name', response.data.file_name);
+                            $('#delete_file_<?= $name ?>').click(function() {
+                                JsLoadingOverlay.show();
+                                file_needto_delete = $(this).attr('file_name');
+                                $.ajax({
+                                    url: '<?= base_url('upload_templib/upload_templib/delete') ?>',
+                                    type: 'GET',
+                                    data: {
+                                        'file_name': file_needto_delete
+                                    },
+                                    success: function(response) {
+                                        console.log(response);
+                                        JsLoadingOverlay.hide();
+                                    },
+                                    error: function(err, xhr) {
+                                        JsLoadingOverlay.hide();
+                                    },
+                                });
+                                $('#delete_file_<?= $name ?>').unbind('click');
+                                $('#<?= $name ?>').val('');
+                                $('#delete_file_<?= $name ?>').addClass('d-none');
+                                $('#btn_<?= $name ?>_uploader').removeClass('d-none');
+                                $('#img-preview_<?= $name ?>').addClass('d-none');
+                                $('#pdf-preview_<?= $name ?>').addClass('d-none');
+                            });
+                        } else {
+                            toastr.error(response.message);
                         }
                         JsLoadingOverlay.hide();
                     },
                     error: function(err, xhr) {
+
                         JsLoadingOverlay.hide();
                     },
                     cache: false,
                     contentType: false,
                     processData: false
                 });
+
             }
         });
 

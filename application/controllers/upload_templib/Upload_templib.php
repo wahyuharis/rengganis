@@ -23,11 +23,42 @@ class Upload_templib extends CI_Controller
 		$config['allowed_types']        = 'gif|jpg|png|pdf';
 		$this->load->library('upload', $config);
 		if (!$this->upload->do_upload('image')) {
-			$error = $this->upload->display_errors();
+			$message = $this->upload->display_errors();
 		} else {
 			$data = $this->upload->data();
-			$success=true;
+			$success = true;
 		}
+
+		header_json();
+		$response = array(
+			'success' => $success,
+			'data' => $data,
+			'error' => $error,
+			'message' => $message,
+		);
+		echo json_encode($response);
+	}
+
+	function delete()
+	{
+		$success = false;
+		$data = array();
+		$error = array();
+		$message = '';
+
+		$file_name = $this->input->get('file_name');
+
+		if (!empty(trim($file_name))) {
+			$path_to_file = './uploads/' . $file_name;
+			if (unlink($path_to_file)) {
+				$message = 'deleted successfully';
+				$success = true;
+			} else {
+				$message = 'errors occured';
+			}
+		}
+
+
 
 		header_json();
 		$response = array(
