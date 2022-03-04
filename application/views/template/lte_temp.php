@@ -37,7 +37,7 @@
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                        Username
+                    <?= ucwords( $this->session->userdata('username') )?>
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">Profile</a>
@@ -67,7 +67,7 @@
                         <img src="<?= base_url("assets/" . USER_EMPTY) ?>" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Username</a>
+                        <a href="#" class="d-block"><?= ucwords( $this->session->userdata('username'))?></a>
                     </div>
                 </div>
 
