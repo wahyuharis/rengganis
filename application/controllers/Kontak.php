@@ -193,4 +193,94 @@ class Kontak extends CI_Controller
 
 		$template->run();
 	}
+
+    function submit()
+	{
+		//init
+		$this->load->library('Form_templib');
+		$form_templib = new Form_templib();
+		//end init
+
+
+		//declare response
+		$error = array();
+		$success = false;
+		$message = '';
+		$data = array();
+
+		$post_data = $this->input->post();
+
+		$primary_id = $this->input->post('id_kontak');
+
+		$this->load->library('form_validation');
+		$this->form_validation->set_data($post_data);
+
+
+        // print_r2($post_data);
+
+		$this->form_validation->set_rules('nama_kontak', ucwords('nama kontak'), 'trim|required');
+		$this->form_validation->set_rules('jenis_kontak', ucwords('jenis kontak'), 'trim|required');
+		$this->form_validation->set_rules('whatsapp', ucwords('whatsapp'), 'trim|required');
+		$this->form_validation->set_rules('kota', ucwords('kota'), 'trim|required');
+
+		// if (empty(trim($primary_id))) {
+		// 	$this->form_validation->set_rules('username', ucwords('username'), 'trim|required|min_length[5]|is_unique[_user.username]');
+		// 	$this->form_validation->set_rules('email', ucwords('email'), 'trim|required|valid_email|is_unique[_user.email]');
+		// 	$this->form_validation->set_rules('password', ucwords('password'), 'trim|required|min_length[5]');
+		// }
+
+		if ($this->form_validation->run() == FALSE) {
+			$success = false;
+			$error = $this->form_validation->error_array();
+			$message = validation_errors();
+		} else {
+			$success = true;
+		}
+
+		// print_r2($post_data);
+		// die();
+
+		if ($success) {
+			if (empty(trim($primary_id))) {
+				//add
+				$set = array();
+				$set['nama_kontak'] = in_post('nama_kontak');
+				$set['jenis_kontak'] = in_post('jenis_kontak');
+				$set['telphone_kantor'] = in_post('telphone_kantor');
+				$set['whatsapp'] = in_post('whatsapp');
+				$set['email'] = in_post('email');
+				$set['kota'] = in_post('kota');
+				$set['alamat'] = in_post('alamat');
+				// print_r2($set);
+
+				$this->db->insert('kontak', $set);
+			} else {
+				//edit
+				$set = array();
+				$set['nama_kontak'] = in_post('nama_kontak');
+				$set['jenis_kontak'] = in_post('jenis_kontak');
+				$set['telphone_kantor'] = in_post('telphone_kantor');
+				$set['whatsapp'] = in_post('whatsapp');
+				$set['email'] = in_post('email');
+				$set['kota'] = in_post('kota');
+				$set['alamat'] = in_post('alamat');
+
+				$where = array(
+					'id_kontak' => $primary_id,
+				);
+
+				$this->db->update('kontak', $set, $where);
+			}
+		}
+
+		// sdfjskdfj
+
+		//set response
+		$form_templib->set_response_data($data);
+		$form_templib->set_response_error($error);
+		$form_templib->set_response_message($message);
+		$form_templib->set_response_success($success);
+		//send response
+		$form_templib->response_submit();
+	}
 }
