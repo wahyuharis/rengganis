@@ -57,6 +57,13 @@ class LTE_Temp
             ),
 
             array(
+                'name' => 'Kontak',
+                'url' => 'kontak/',
+                'icon' => 'fas fa-address-book ',
+            ),
+            // <i class="far fa-address-book"></i>
+
+            array(
                 'name' => 'Managemen User',
                 'url' => '#',
                 'icon' => 'far fa-circle ',

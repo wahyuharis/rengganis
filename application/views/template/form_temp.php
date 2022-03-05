@@ -8,7 +8,7 @@ $action = '#';
 ?>
 <div class="card card-secondary">
     <div class="card-header">
-        <h3 class="card-title"><?=$form_title?></h3>
+        <h3 class="card-title"><?= $form_title ?></h3>
     </div>
     <div class="card-body">
         <?= form_open_multipart($action, $attributes) ?>
@@ -47,6 +47,10 @@ $action = '#';
             });
         });
 
+        $(document).on('select2:open', () => {
+            document.querySelector('.select2-search__field').focus();
+        });
+
 
         $('.summernote-textarea').each(function() {
             // console.log( $(this).attr('id') );
@@ -69,8 +73,8 @@ $action = '#';
             // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
         });
 
-        $('.password-whenkeyup').keyup(function(e){
-            $(this).attr('type','password');
+        $('.password-whenkeyup').keyup(function(e) {
+            $(this).attr('type', 'password');
         })
 
         bsCustomFileInput.init();
