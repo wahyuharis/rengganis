@@ -173,6 +173,19 @@ function dropdown_array($result_array, $index, $label, $placeholder = "", $empty
     return $output;
 }
 
+function arr_to_opt($result_array, $index, $label)
+{
+    $output = array();
+
+    if($result_array){
+        foreach ($result_array as $row) {
+            $output[$row[$index]] = $row[$label];
+        }
+    }
+    
+    return $output;
+}
+
 function base_url_from_array($arr_url)
 {
     $ci = &get_instance();

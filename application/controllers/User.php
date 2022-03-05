@@ -21,13 +21,18 @@ class User extends CI_Controller
 			'Username',
 			'Email',
 			'Phone',
-			'Fullname'
+			'Fullname',
+			'Jabatan'
 		);
 
 		$datatables->set_add_url(base_url('user/add'));
 		$datatables->set_column_title($column_title);
 		$datatables->set_url_serverside('user/datatables_serverside');
-		$html = $datatables->htmltable();;
+		// $datatables->set_filter_form('#filter-dtt-list');
+
+		$html = '';
+		// $html .= load_view_html('user/user_list_filter');
+		$html .= $datatables->htmltable();;
 
 		$template->set_content_html($html);
 		$template->set_title_page($page_title);
@@ -38,6 +43,8 @@ class User extends CI_Controller
 	function datatables_serverside()
 	{
 		$this->load->model('User_model');
+
+		// print_r2($_GET);
 
 		$datatables = new Datatables_templib();
 		$user_model = new User_model();
@@ -103,6 +110,8 @@ class User extends CI_Controller
 	function edit($primary_id = '')
 	{
 		$this->load->library('Form_templib');
+		$this->load->model('User_model');
+		$user_model = new User_model();
 
 		$template = new LTE_Temp();
 		$form_templib = new Form_templib();
@@ -112,15 +121,52 @@ class User extends CI_Controller
 		$form_templib->set_base_url('user');
 		$form_templib->set_form_title($page_title);
 
-		//column 1 start
-		$form_templib->hidden_input('id_user', '');
-		$form_templib->text_input('username', 'username', '');
-		$form_templib->password_input('password', 'password', '');
-		$form_templib->text_input('email', 'email', '');
-		$form_templib->text_input('fullname', 'fullname', '');
-		$form_templib->select_input('Jabatan', 'jabatan', [1 => 'admin', 2 => 'user'], '');
-		// $form_templib->select_input_multiple('Jabatan2', 'jabatan2', [1 => 'admin', 2 => 'user'], '');
+		//create opt select
+		// $this->db->where('_jabatan.deleted', 0);
+		// $db = $this->db->get('_jabatan');
+		$opt_jabatan = arr_to_opt($user_model->get_jabatan(), 'id_jabatan', 'nama_jabatan');
+
+
+		$form = array();
+		$form['id_user'] = '';
+		$form['username'] = '';
+		$form['password'] = '';
+		$form['email'] = '';
+		$form['phone'] = '';
+		$form['fullname'] = '';
+		$form['id_jabatan'] = '';
+		$form['foto'] = '';
+		$form['alamat'] = '';
+		if (!empty(trim($primary_id))) {
+			$row_data = $user_model->get_user_row($primary_id);
+
+			if($row_data){
+				$form['id_user'] = $row_data['id_user'];
+				$form['username'] = $row_data['username'];
+				$form['password'] = '';
+				$form['email'] = $row_data['email'];
+				$form['phone'] = $row_data['phone'];
+				$form['fullname'] = $row_data['fullname'];
+				$form['id_jabatan'] = $row_data['id_jabatan'];
+				$form['foto'] = $row_data['foto'];
+				$form['alamat'] = $row_data['alamat'];
+			}
+
 		
+		}
+
+		// die();
+
+		//column 1 start
+		$form_templib->hidden_input('id_user', $form['id_user']);
+		$form_templib->text_input('username', 'username', $form['username']);
+		$form_templib->password_input('password', 'password', $form['password']);
+		$form_templib->text_input('email', 'email', $form['email']);
+		$form_templib->text_input('phone', 'phone', $form['phone']);
+		$form_templib->text_input('fullname', 'fullname', $form['fullname']);
+		$form_templib->select_input('Jabatan', 'jabatan', $opt_jabatan, $form['id_jabatan']);
+		// $form_templib->select_input_multiple('Jabatan2', 'jabatan2', [1 => 'admin', 2 => 'user'], '');
+
 		$form_templib->set_col1();
 		//column 1 end
 
@@ -128,8 +174,8 @@ class User extends CI_Controller
 		//column 2 start
 		// $form_templib->date_input('datesample', 'datesample', '');
 		// $form_templib->daterange_input('daterangesample', 'daterangesample', '');
-		$form_templib->form_upload('Foto', 'foto', '');
-		$form_templib->textarea_input('alamat', 'alamat', '');
+		$form_templib->form_upload('Foto', 'foto', $form['foto']);
+		$form_templib->textarea_input('alamat', 'alamat', $form['alamat']);
 		$form_templib->set_col2();
 		//column 2 end
 
@@ -160,14 +206,20 @@ class User extends CI_Controller
 
 		$post_data = $this->input->post();
 
+		$primary_id = $this->input->post('id_user');
 
 		$this->load->library('form_validation');
 		$this->form_validation->set_data($post_data);
 
-		$this->form_validation->set_rules('username', ucwords('username'), 'trim|required');
-		$this->form_validation->set_rules('email', ucwords('email'), 'trim|required|valid_email|is_unique[_user.email]');
+
 		$this->form_validation->set_rules('jabatan', ucwords('jabatan'), 'trim|required');
-		// $this->form_validation->set_rules('jabatan2', ucwords('jabatan2'), 'required');
+		$this->form_validation->set_rules('phone', ucwords('phone'), 'trim|required');
+
+		if (empty(trim($primary_id))) {
+			$this->form_validation->set_rules('username', ucwords('username'), 'trim|required|min_length[5]|is_unique[_user.username]');
+			$this->form_validation->set_rules('email', ucwords('email'), 'trim|required|valid_email|is_unique[_user.email]');
+			$this->form_validation->set_rules('password', ucwords('password'), 'trim|required|min_length[5]');
+		}
 
 		if ($this->form_validation->run() == FALSE) {
 			$success = false;
@@ -180,15 +232,18 @@ class User extends CI_Controller
 		// print_r2($post_data);
 		// die();
 
-		$primary_id = $this->input->post('id_user');
 		if ($success) {
 			if (empty(trim($primary_id))) {
 				//add
 				$set = array();
 				$set['username'] = in_post('username');
+				$set['password'] = md5(in_post('password'));
 				$set['email'] = in_post('email');
+				$set['phone'] = in_post('phone');
 				$set['fullname'] = in_post('fullname');
 				$set['id_jabatan'] = in_post('jabatan');
+				$set['foto'] = in_post('foto');
+				$set['alamat'] = in_post('alamat');
 
 				// print_r2($set);
 
@@ -197,9 +252,17 @@ class User extends CI_Controller
 				//edit
 				$set = array();
 				$set['username'] = in_post('username');
+
+				if (!empty(trim(in_post('password')))) {
+					$set['password'] = md5(in_post('password'));
+				}
+
 				$set['email'] = in_post('email');
+				$set['phone'] = in_post('phone');
 				$set['fullname'] = in_post('fullname');
 				$set['id_jabatan'] = in_post('jabatan');
+				$set['foto'] = in_post('foto');
+				$set['alamat'] = in_post('alamat');
 
 				$where = array(
 					'id_user' => $primary_id,

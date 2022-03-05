@@ -5,12 +5,20 @@ class Datatables_templib
 	private $column_title;
 	private $card_title = '';
 	private $url_serverside = '';
-	private $order_arr=false;
-	private $add_url=false;
+	private $order_arr = false;
+	private $add_url = false;
+	private $filter_form_id = false;
 
 	private $sql = '';
 	private $method_callback = false;
 	private $method_callback2 = false;
+
+
+	function set_filter_form($filter_form_id)
+	{
+		$this->filter_form_id = $filter_form_id;
+		return $this;
+	}
 
 	function set_url_serverside($url_serverside)
 	{
@@ -49,38 +57,41 @@ class Datatables_templib
 		return $search;
 	}
 
-	function set_order_arr($arr){
+	function set_order_arr($arr)
+	{
 
-		$this->order_arr=$arr;
+		$this->order_arr = $arr;
 		return $this;
 	}
 
-	function orderby(){
+	function orderby()
+	{
 		$ci = &get_instance();
-		$order_arr =$ci->input->get('order');
-		$sql_order="";
+		$order_arr = $ci->input->get('order');
+		$sql_order = "";
 
 		// print_r2($order_arr);
 
-		$col_order=false;
-		$col_order_direction='';
-		if(is_array($order_arr)){
-			if(isset($order_arr[0]['column'])){
-				$col_order=$order_arr[0]['column'];
-				$col_order_direction=$order_arr[0]['dir'];
+		$col_order = false;
+		$col_order_direction = '';
+		if (is_array($order_arr)) {
+			if (isset($order_arr[0]['column'])) {
+				$col_order = $order_arr[0]['column'];
+				$col_order_direction = $order_arr[0]['dir'];
 			}
 		}
 
-		if($col_order){
-			$sql_order = "order by ".$this->order_arr[$col_order-1]." ". $col_order_direction ;
+		if ($col_order) {
+			$sql_order = "order by " . $this->order_arr[$col_order - 1] . " " . $col_order_direction;
 		}
 		// print_r2($sql_order);
 
 		return $sql_order;
 	}
 
-	function set_column_title($arr){
-		$this->column_title=$arr;
+	function set_column_title($arr)
+	{
+		$this->column_title = $arr;
 	}
 
 	function htmltable()
@@ -103,6 +114,7 @@ class Datatables_templib
 
 		$content_data = array();
 		$content_data['card_title'] = $this->card_title . " List";
+		$content_data['filter_form_id'] = $this->filter_form_id;
 		$content_data['thead'] = $column_title;
 		$content_data['add_url'] = $this->add_url;
 		$content_data['url_serverside'] = $this->url_serverside;

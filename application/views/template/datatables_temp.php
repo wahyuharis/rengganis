@@ -28,6 +28,7 @@
 </div>
 <script>
     $(document).ready(function() {
+
         var table = $('#dtt_table').DataTable({
             "dom": "<'row mb-4'<'col-6 add_btn_class'><'col-6 text-right'B>>" + "<'row'<'col-sm-6'l><'col-sm-6'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'i><'col-sm-7'p>>",
             "buttons": ["copy", "csv", "excel", "pdf"],
@@ -61,7 +62,17 @@
                     "previous": '<i class="fas fa-angle-left"></i>'
                 }
             }
-        })
+        });
+
+        <?php if ($filter_form_id) { ?>
+            $('<?= $filter_form_id ?>').submit(function(e) {
+                e.preventDefault();
+
+                filter_data = $(this).serialize();
+
+                table.ajax.url('<?= base_url($url_serverside)  ?>' + '?' + filter_data).load();
+            });
+        <?php } ?>
 
 
         function delete_handler() {

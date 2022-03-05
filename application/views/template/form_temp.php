@@ -52,7 +52,7 @@ $action = '#';
             // console.log( $(this).attr('id') );
             var idselect = $(this).attr('id');
             $('#' + idselect).summernote({
-                height: 200,
+                height: 100,
             });
         });
 

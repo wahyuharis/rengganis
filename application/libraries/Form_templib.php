@@ -216,7 +216,7 @@ class Form_templib
         $html = '
         <div class="form-group">
             <label for="' . $name . '" >' . $label . '</label>
-            ' . form_textarea($name, $value, ' class="form-control ' . $is_summernote . '" style="height:300px" id="' . $name . '" placeholder="' . $label . '" ') . '
+            ' . form_textarea($name, $value, ' class="form-control ' . $is_summernote . '" style="height:200px" id="' . $name . '" placeholder="' . $label . '" ') . '
         </div>';
 
         array_push($this->form_buff, $html);

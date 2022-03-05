@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col-12">
             <label for="<?= $name ?>_uploader"><?= $label ?></label><br>
-            <label id="btn_<?= $name ?>_uploader" class="btn btn-block btn-primary" for="<?= $name ?>_uploader">Upload</label>
-            <input type="file" class="d-none"  id="<?= $name ?>_uploader">
+            <label id="btn_<?= $name ?>_uploader" class="btn btn-block btn-primary" for="<?= $name ?>_uploader" style="margin-bottom:0px">Upload</label>
+            <input type="file" class="d-none" id="<?= $name ?>_uploader">
         </div>
     </div>
     <div class="row">
@@ -11,9 +11,23 @@
             <input type="text" name="<?= $name ?>" id="<?= $name ?>" value="<?= $value ?>" class="d-none form-control">
         </div>
         <div class="col-12" id="preview">
-            <img id="img-preview_<?= $name ?>" style="max-height: 100px;" src="#" class="d-none">
-            <a id="pdf-preview_<?= $name ?>" href="#" class="d-none"></a>
-            <span id="delete_file_<?= $name ?>" class="btn btn-danger float-right d-none">Delete</span>
+            <div class="row">
+                <div class="col-4">
+                    <img id="img-preview_<?= $name ?>" style="max-height: 100px;" src="#" class="d-none">
+                    <a id="pdf-preview_<?= $name ?>" href="#" class="d-none">
+                        <!-- pdf-icon-item.png -->
+                        <img id="pdf-icon-preview" style="max-height: 100px;" src="<?= base_url('assets/pdf-icon-item.png') ?>">
+                        <br><span></span>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <span id="delete_file_<?= $name ?>" class="btn btn-danger d-none">Delete</span>
+                </div>
+                <div class="col-4">
+
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -44,7 +58,7 @@
 
                             } else {
                                 $('#pdf-preview_<?= $name ?>').attr('href', '<?= base_url('uploads') ?>/' + response.data.file_name);
-                                $('#pdf-preview_<?= $name ?>').html(response.data.file_name);
+                                $('#pdf-preview_<?= $name ?> > span').html(response.data.file_name);
                                 $('#pdf-preview_<?= $name ?>').removeClass('d-none');
                                 $('#img-preview_<?= $name ?>').addClass('d-none');
                                 $('#delete_file_<?= $name ?>').removeClass('d-none');
