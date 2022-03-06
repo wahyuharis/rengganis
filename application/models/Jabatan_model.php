@@ -9,7 +9,9 @@ class Jabatan_model extends CI_Model
     {
         $order = array(
             '_jabatan.nama_jabatan',
-            '_jabatan.id_jabatan'
+            '1',
+            '_jabatan.id_jabatan',
+            
         );
 
         return $order;
@@ -20,12 +22,12 @@ class Jabatan_model extends CI_Model
 
         $sql = "SELECT 
         _jabatan.nama_jabatan ,
+        _jabatan.allow_delete ,
         _jabatan.id_jabatan
         FROM _jabatan
         WHERE
         _jabatan.deleted=0
-        AND
-        _jabatan.allow_delete=1
+        
         and
         _jabatan.nama_jabatan like '%" . $this->db->escape_str($search) . "%'
 

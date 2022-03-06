@@ -4,13 +4,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Jabatan extends CI_Controller
 {
 
-    function __construct()
-    {
-        parent::__construct();
-        $userdata = $this->session->userdata();
-    }
+	function __construct()
+	{
+		parent::__construct();
+		$userdata = $this->session->userdata();
+	}
 
-    public function index()
+	public function index()
 	{
 		$template = new LTE_Temp();
 		$datatables = new Datatables_templib();
@@ -19,6 +19,7 @@ class Jabatan extends CI_Controller
 		//generate culumn title
 		$column_title = array(
 			'Nama Jabatan',
+			'locked',
 		);
 
 		$datatables->set_add_url(base_url('jabatan/add'));
@@ -36,7 +37,7 @@ class Jabatan extends CI_Controller
 		$template->run();
 	}
 
-    
+
 	function datatables_serverside()
 	{
 		$this->load->model('Jabatan_model');
@@ -77,6 +78,13 @@ class Jabatan extends CI_Controller
 	function _callback_column($key, $row, $val)
 	{
 
+		if ($key == 'allow_delete') {
+			$val = '';
+			if ($row['allow_delete'] . "" == "0") {
+				$val = '<i class="fas fa-lock"></i>';
+			}
+		}
+
 		return $val;
 	}
 
@@ -88,7 +96,11 @@ class Jabatan extends CI_Controller
 		$html_message = "";
 		$data = array();
 
-		$this->db->update('_jabatan', ['deleted' => 1], ['id_jabatan' => $id]);
+		$allow_delete = get_row('_jabatan', ['id_jabatan' => $id])['allow_delete'];
+
+		if ($allow_delete) {
+			$this->db->update('_jabatan', ['deleted' => 1], ['id_jabatan' => $id]);
+		}
 
 		$response = array(
 			'success' => $success,

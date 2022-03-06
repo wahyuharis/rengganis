@@ -10,6 +10,7 @@ class User_model extends CI_Model
             '_user.phone',
             '_user.fullname',
             '_jabatan.nama_jabatan',
+            '_user.id_user',
             '_user.id_user'
         ];
         return $order;
@@ -23,6 +24,7 @@ class User_model extends CI_Model
         _user.phone,
         _user.fullname,
         _jabatan.nama_jabatan,
+        _user.allow_delete,
         _user.id_user
         FROM 
         _user
@@ -31,7 +33,6 @@ class User_model extends CI_Model
         ON _jabatan.id_jabatan=_user.id_jabatan
         
         WHERE _user.deleted=0
-        AND _user.allow_delete=1
 
         and (
             _user.username like '%" . $this->db->escape_str($search) . "%' or

@@ -22,7 +22,8 @@ class User extends CI_Controller
 			'Email',
 			'Phone',
 			'Fullname',
-			'Jabatan'
+			'Jabatan',
+			"Locked",
 		);
 
 		$datatables->set_add_url(base_url('user/add'));
@@ -80,6 +81,13 @@ class User extends CI_Controller
 	function _callback_column($key, $row, $val)
 	{
 
+		if ($key == 'allow_delete') {
+			$val = '';
+			if ($row['allow_delete'] . "" == '0') {
+				$val = '<i class="fas fa-lock"></i>';
+			}
+		}
+
 		return $val;
 	}
 
@@ -91,7 +99,11 @@ class User extends CI_Controller
 		$html_message = "";
 		$data = array();
 
-		$this->db->update('_user', ['deleted' => 1], ['id_user' => $id]);
+		$allow_delete = get_row('_user', ['id_user' => $id])['allow_delete'];
+		if ($allow_delete) {
+			$this->db->update('_user', ['deleted' => 1], ['id_user' => $id]);
+		}
+
 
 		$response = array(
 			'success' => $success,
@@ -140,7 +152,7 @@ class User extends CI_Controller
 		if (!empty(trim($primary_id))) {
 			$row_data = $user_model->get_user_row($primary_id);
 
-			if($row_data){
+			if ($row_data) {
 				$form['id_user'] = $row_data['id_user'];
 				$form['username'] = $row_data['username'];
 				$form['password'] = '';
@@ -151,8 +163,6 @@ class User extends CI_Controller
 				$form['foto'] = $row_data['foto'];
 				$form['alamat'] = $row_data['alamat'];
 			}
-
-		
 		}
 
 		// die();
@@ -264,11 +274,13 @@ class User extends CI_Controller
 				$set['foto'] = in_post('foto');
 				$set['alamat'] = in_post('alamat');
 
-				$where = array(
-					'id_user' => $primary_id,
-				);
-
-				$this->db->update('_user', $set, $where);
+				$allow_delete = get_row('_user', ['id_user' => $primary_id])['allow_delete'];
+				if ($allow_delete) {
+					$where = array(
+						'id_user' => $primary_id,
+					);
+					$this->db->update('_user', $set, $where);
+				}
 			}
 		}
 
