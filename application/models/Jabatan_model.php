@@ -8,6 +8,7 @@ class Jabatan_model extends CI_Model
     function list_order()
     {
         $order = array(
+            '_jabatan.id_jabatan',
             '_jabatan.nama_jabatan',
             '1',
             '_jabatan.id_jabatan',
@@ -21,6 +22,7 @@ class Jabatan_model extends CI_Model
     {
 
         $sql = "SELECT 
+        _jabatan.id_jabatan,
         _jabatan.nama_jabatan ,
         _jabatan.allow_delete ,
         _jabatan.id_jabatan

@@ -5,6 +5,7 @@ class User_model extends CI_Model
     function user_list_order()
     {
         $order = [
+            '_user.id_user',
             '_user.username',
             '_user.email',
             '_user.phone',
@@ -19,6 +20,7 @@ class User_model extends CI_Model
     function user_list_sql($search, $orderby)
     {
         $sql = "SELECT 
+        _user.id_user,
         _user.username,
         _user.email,
         _user.phone,

@@ -21,6 +21,7 @@ class Kontak extends CI_Controller
 
         //generate culumn title
         $column_title = array(
+			'id_kontak',
             'Nama kontak',
             'Jenis kontak',
             'Telphone kantor',

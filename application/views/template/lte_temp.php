@@ -85,7 +85,7 @@
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- <li class="nav-item">
                             <a href="<?= base_url('home') ?>" class="nav-link">
                                 <i class="fas fa-tachometer-alt"></i>
@@ -138,7 +138,7 @@
                                                 }
                                                 ?>
                                                 <a href="<?= base_url($row2['url']) ?>" class="nav-link <?= $is_active ?>">
-                                                    <i class="far fa-circle nav-icon"></i>
+                                                    <i class="<?=$row2['icon']?>"></i>
                                                     <p><?= $row2['name'] ?></p>
                                                 </a>
                                             </li>

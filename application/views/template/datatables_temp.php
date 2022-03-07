@@ -42,10 +42,16 @@
                 'url': '<?= base_url($url_serverside)  ?>',
             },
             columnDefs: [{
-                "orderable": false,
-                "searchable": false,
-                "targets": 0
-            }],
+                    "orderable": false,
+                    "searchable": false,
+                    "targets": 0
+                },
+                {
+                    "searchable": false,
+                    "visible": false,
+                    "targets": 1
+                }
+            ],
             "drawCallback": function(settings) {
                 delete_handler();
             },

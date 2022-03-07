@@ -8,6 +8,7 @@ class Kontak_model extends CI_Model
     function list_order()
     {
         $order = array(
+            'kontak.id_kontak',
             'kontak.nama_kontak',
             'kontak.jenis_kontak',
             'kontak.telphone_kantor',
@@ -23,7 +24,7 @@ class Kontak_model extends CI_Model
     {
 
         $sql = "SELECT 
-
+            kontak.id_kontak,
             kontak.nama_kontak,
             kontak.jenis_kontak,
             kontak.telphone_kantor,

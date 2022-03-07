@@ -18,6 +18,7 @@ class Jabatan extends CI_Controller
 
 		//generate culumn title
 		$column_title = array(
+			'id_jabatan',
 			'Nama Jabatan',
 			'locked',
 		);

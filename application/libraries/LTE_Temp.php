@@ -55,28 +55,138 @@ class LTE_Temp
                 'url' => 'home/',
                 'icon' => 'fas fa-tachometer-alt',
             ),
-
             array(
                 'name' => 'Kontak',
                 'url' => 'kontak/',
                 'icon' => 'fas fa-address-book ',
             ),
-            // <i class="far fa-address-book"></i>
+            array(
+                'name' => 'Item',
+                'url' => 'item/',
+                'icon' => 'fas fa-box ',
+            ),
 
+            // <i class="fas fa-shopping-bag"></i>
+            // <i class="fas fa-hand-holding-heart"></i>
+            // <i class="fas fa-cart-plus"></i>
+            // <i class="fas fa-receipt"></i>
+            // <i class="fas fa-cart-arrow-down"></i>
+            // <i class="far fa-handshake"></i>
+            
+            array(
+                'name' => 'Pembelian',
+                'url' => '#',
+                'icon' => 'fas fa-shopping-bag ',
+                'child' => array(
+                    array(
+                        'name' => 'Order',
+                        'url' => 'pembelian_order/',
+                        'icon' => 'fas fa-cart-plus ',
+                    ),
+                    array(
+                        'name' => 'Pembelian',
+                        'url' => 'pembelian/',
+                        'icon' => 'fas fa-receipt ',
+                    ),
+                    array(
+                        'name' => 'Retur',
+                        'url' => 'pembelian_retur/',
+                        'icon' => 'far fa-handshake ',
+                    ),
+                )
+            ),
+            // <i class="fas fa-hand-holding-usd"></i>
+            // <i class="fas fa-comment-dollar"></i>
+            // <i class="fas fa-hand-holding-heart"></i>
+            // <i class="fas fa-file-invoice-dollar"></i>
+            // <i class="fas fa-dollar-sign"></i>
+           
+            array(
+                'name' => 'Penjualan',
+                'url' => '#',
+                'icon' => 'fas fa-hand-holding-usd ',
+                'child' => array(
+                    array(
+                        'name' => 'Order',
+                        'url' => 'penjualan_order/',
+                        'icon' => 'fas fa-comment-dollar ',
+                    ),
+                    array(
+                        'name' => 'Penjualan',
+                        'url' => 'penjualan/',
+                        'icon' => 'fas fa-file-invoice-dollar ',
+                    ),
+                    array(
+                        'name' => 'Retur',
+                        'url' => 'penjualan_retur/',
+                        'icon' => 'fas fa-hand-holding-heart ',
+                    ),
+                )
+            ),
+
+            array(
+                'name' => 'Stok',
+                'url' => '#',
+                'icon' => 'fas fa-boxes ',
+                'child' => array(
+                    array(
+                        'name' => 'Gudang',
+                        'url' => 'gudang/',
+                        'icon' => 'fas fa-house-damage ',
+                    ),
+                    array(
+                        'name' => 'Sales',
+                        'url' => 'sales/',
+                        'icon' => 'fas fa-people-carry ',
+                    ),
+                    array(
+                        'name' => 'Daftar Stok',
+                        'url' => 'stock/',
+                        'icon' => 'fas fa-paste ',
+                    ),
+                )
+            ),
+
+            // <i class="fas fa-money-bill-alt"></i>
+            // <i class="fas fa-wallet"></i>
+            // <i class="fas fa-book-open"></i>
+            // <i class="fas fa-book"></i>
+            array(
+                'name' => '  Keuangan',
+                'url' => '#',
+                'icon' => 'fas fa-money-bill-alt ',
+                'child' => array(
+                   
+                    array(
+                        'name' => 'Rekening & E-Wallet',
+                        'url' => 'rekening/',
+                        'icon' => 'fas fa-wallet ',
+                    ),
+                    array(
+                        'name' => 'Register Keuangan',
+                        'url' => 'rekening_reg/',
+                        'icon' => 'fas fa-book ',
+                    ),
+                )
+            ),
+
+            // <i class="fas fa-user-cog"></i>
+            // <i class="fas fa-users"></i>
+            // <i class="fas fa-id-card"></i>
             array(
                 'name' => 'Managemen User',
                 'url' => '#',
-                'icon' => 'far fa-circle ',
+                'icon' => 'fas fa-user-cog ',
                 'child' => array(
                     array(
                         'name' => 'User',
                         'url' => 'user',
-                        'icon' => 'far fa-circle',
+                        'icon' => 'fas fa-users',
                     ),
                     array(
                         'name' => 'Jabatan',
                         'url' => 'jabatan',
-                        'icon' => 'far fa-circle',
+                        'icon' => 'fas fa-id-card',
                     ),
                 )
             ),

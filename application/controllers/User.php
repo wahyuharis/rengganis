@@ -18,6 +18,7 @@ class User extends CI_Controller
 
 		//generate culumn title
 		$column_title = array(
+			'id_user',
 			'Username',
 			'Email',
 			'Phone',
@@ -138,6 +139,11 @@ class User extends CI_Controller
 		// $db = $this->db->get('_jabatan');
 		$opt_jabatan = arr_to_opt($user_model->get_jabatan(), 'id_jabatan', 'nama_jabatan');
 
+		$this->load->model('Gudang_model');
+		$gudang_model = new Gudang_model();
+		$opt_kota_arr = $gudang_model->alamat_kota();
+		$opt_kota = arr_to_opt($opt_kota_arr, 'id', 'kota');
+
 
 		$form = array();
 		$form['id_user'] = '';
@@ -148,6 +154,7 @@ class User extends CI_Controller
 		$form['fullname'] = '';
 		$form['id_jabatan'] = '';
 		$form['foto'] = '';
+		$form['kota'] = '';
 		$form['alamat'] = '';
 		if (!empty(trim($primary_id))) {
 			$row_data = $user_model->get_user_row($primary_id);
@@ -161,6 +168,7 @@ class User extends CI_Controller
 				$form['fullname'] = $row_data['fullname'];
 				$form['id_jabatan'] = $row_data['id_jabatan'];
 				$form['foto'] = $row_data['foto'];
+				$form['kota'] =  $row_data['kota'];
 				$form['alamat'] = $row_data['alamat'];
 			}
 		}
@@ -174,7 +182,6 @@ class User extends CI_Controller
 		$form_templib->text_input('email', 'email', $form['email']);
 		$form_templib->text_input('phone', 'phone', $form['phone']);
 		$form_templib->text_input('fullname', 'fullname', $form['fullname']);
-		$form_templib->select_input('Jabatan', 'jabatan', $opt_jabatan, $form['id_jabatan']);
 		// $form_templib->select_input_multiple('Jabatan2', 'jabatan2', [1 => 'admin', 2 => 'user'], '');
 
 		$form_templib->set_col1();
@@ -184,10 +191,15 @@ class User extends CI_Controller
 		//column 2 start
 		// $form_templib->date_input('datesample', 'datesample', '');
 		// $form_templib->daterange_input('daterangesample', 'daterangesample', '');
-		$form_templib->form_upload('Foto', 'foto', $form['foto']);
+		$form_templib->select_input('Jabatan', 'jabatan', $opt_jabatan, $form['id_jabatan']);
+		$form_templib->select_input('Kota', 'kota', $opt_kota, $form['kota']);
+
 		$form_templib->textarea_input('alamat', 'alamat', $form['alamat']);
 		$form_templib->set_col2();
 		//column 2 end
+
+		$form_templib->form_upload('Foto', 'foto', $form['foto']);
+		$form_templib->set_col3();
 
 
 		$html = $form_templib->generate();
@@ -224,6 +236,7 @@ class User extends CI_Controller
 
 		$this->form_validation->set_rules('jabatan', ucwords('jabatan'), 'trim|required');
 		$this->form_validation->set_rules('phone', ucwords('phone'), 'trim|required');
+		$this->form_validation->set_rules('kota', ucwords('kota'), 'trim|required');
 
 		if (empty(trim($primary_id))) {
 			$this->form_validation->set_rules('username', ucwords('username'), 'trim|required|min_length[5]|is_unique[_user.username]');
@@ -239,10 +252,25 @@ class User extends CI_Controller
 			$success = true;
 		}
 
+		if(!empty(trim($primary_id)) ){
+			$id_jabatan=get_row('_user',['id_user'=>$primary_id ])['id_jabatan'];
+			$jabatan=get_row('_jabatan',['id_jabatan'=>$id_jabatan ])['nama_jabatan'];
+			if($jabatan=='sales'){
+				$success = false;
+				$message .= "User Jabatan Sales Tidak Boleh diubah Jabatannya<br>";
+				$message .= "Jika Ikin Merubah Jabatan Silahkan Tambahkan User Baru<br>";
+
+				$error['jabatan']="<p>User Jabatan Sales Tidak Boleh diubah Jabatannya<br></p>";
+			}
+		}
+
 		// print_r2($post_data);
 		// die();
 
+		$this->load->model('Sales_model');
+		$sales_model = new Sales_model();
 		if ($success) {
+			$this->db->trans_start();
 			if (empty(trim($primary_id))) {
 				//add
 				$set = array();
@@ -253,11 +281,22 @@ class User extends CI_Controller
 				$set['fullname'] = in_post('fullname');
 				$set['id_jabatan'] = in_post('jabatan');
 				$set['foto'] = in_post('foto');
+				$set['kota'] = in_post('kota');
 				$set['alamat'] = in_post('alamat');
 
-				// print_r2($set);
 
 				$this->db->insert('_user', $set);
+				$id_user = $this->db->insert_id();
+
+				$jabatan = get_row('_jabatan', ['id_jabatan' => in_post('jabatan')])['nama_jabatan'];
+				if ($jabatan == 'sales') {
+					$set_sales['nama_gudang'] = in_post('username');
+					$set_sales['kota'] = in_post('kota');
+					$set_sales['phone'] = in_post('phone');
+					$set_sales['alamat'] = in_post('alamat');
+					$set_sales['id_user'] = $id_user;
+					$sales_model->user_sales_add($set_sales);
+				}
 			} else {
 				//edit
 				$set = array();
@@ -272,6 +311,7 @@ class User extends CI_Controller
 				$set['fullname'] = in_post('fullname');
 				$set['id_jabatan'] = in_post('jabatan');
 				$set['foto'] = in_post('foto');
+				$set['kota'] = in_post('kota');
 				$set['alamat'] = in_post('alamat');
 
 				$allow_delete = get_row('_user', ['id_user' => $primary_id])['allow_delete'];
@@ -281,7 +321,18 @@ class User extends CI_Controller
 					);
 					$this->db->update('_user', $set, $where);
 				}
+
+				$jabatan = get_row('_jabatan', ['id_jabatan' => in_post('jabatan')])['nama_jabatan'];
+				if ($jabatan == 'sales') {
+					$set_sales['nama_gudang'] = in_post('username');
+					$set_sales['kota'] = in_post('kota');
+					$set_sales['phone'] = in_post('phone');
+					$set_sales['alamat'] = in_post('alamat');
+					$set_sales['id_user'] = $primary_id;
+					$sales_model->user_sales_update($set_sales, $primary_id);
+				}
 			}
+			$this->db->trans_complete();
 		}
 
 		// sdfjskdfj
