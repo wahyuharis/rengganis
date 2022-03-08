@@ -20,7 +20,7 @@ class Upload_templib extends CI_Controller
 		$message = '';
 
 		$config['upload_path']          = './uploads/';
-		$config['allowed_types']        = 'gif|jpg|png|pdf';
+		$config['allowed_types']        = 'gif|jpg|png|pdf|xls|xlsx';
 		$this->load->library('upload', $config);
 		if (!$this->upload->do_upload('image')) {
 			$message = $this->upload->display_errors();

@@ -60,10 +60,28 @@ class LTE_Temp
                 'url' => 'kontak/',
                 'icon' => 'fas fa-address-book ',
             ),
+            // array(
+            //     'name' => 'Item',
+            //     'url' => 'item/',
+            //     'icon' => 'fas fa-box ',
+            // ),<i class="fas fa-tags"></i>
+
             array(
                 'name' => 'Item',
-                'url' => 'item/',
+                'url' => '#',
                 'icon' => 'fas fa-box ',
+                'child' => array(
+                    array(
+                        'name' => 'Item',
+                        'url' => 'item/',
+                        'icon' => 'fas fa-box ',
+                    ),
+                    array(
+                        'name' => 'Jenis Item',
+                        'url' => 'item_jenis/',
+                        'icon' => 'fas fa-tags ',
+                    ),
+                )
             ),
 
             // <i class="fas fa-shopping-bag"></i>

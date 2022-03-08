@@ -40,11 +40,11 @@ class Item_model extends CI_Model
          WHERE item.deleted=0 
         and
         (
-            item.item_nama like '%".$this->db->escape_str($search)."%'  or
-            item.satuan like '%".$this->db->escape_str($search)."%'  or
-            item.harga_jual like '%".$this->db->escape_str($search)."%'  or
-            item.harga_beli like '%".$this->db->escape_str($search)."%'    or
-            item_jenis_imp_f(item.id_item) like  '%".$this->db->escape_str($search)."%' 
+            item.item_nama like '%" . $this->db->escape_str($search) . "%'  or
+            item.satuan like '%" . $this->db->escape_str($search) . "%'  or
+            item.harga_jual like '%" . $this->db->escape_str($search) . "%'  or
+            item.harga_beli like '%" . $this->db->escape_str($search) . "%'    or
+            item_jenis_imp_f(item.id_item) like  '%" . $this->db->escape_str($search) . "%' 
         )
         
         GROUP BY item.id_item
@@ -69,4 +69,34 @@ class Item_model extends CI_Model
     }
 
 
+    function get_item_jenis()
+    {
+        $this->db->where('item_jenis.deleted', 0);
+        $db = $this->db->get('item_jenis');
+
+        if ($db->num_rows() > 0) {
+            return $db->result_array();
+        } else {
+            return false;
+        }
+    }
+
+    function get_item_jenis_selected($id_item)
+    {
+        $return = array();
+
+        $this->db->where('id_item', $id_item);
+        $this->db->select('id_item_jenis');
+        $db = $this->db->get('item_rel_item_jenis');
+
+        foreach ($db->result_array() as $row) {
+            array_push($return, $row['id_item_jenis']);
+        }
+
+        if ($db->num_rows() > 0) {
+            return $return;
+        } else {
+            return false;
+        }
+    }
 }

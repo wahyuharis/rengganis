@@ -196,7 +196,7 @@ class Form_templib
         $html = '
         <div class="form-group">
             <label for="' . $name . '" >' . $label . '</label>
-            ' . form_dropdown($name, $option, $value, ' class="form-control select2-formtemplib"  multiple="multiple" id="' . $name . '" placeholder="' . $label . '" ') . '
+            ' . form_dropdown($name."[]", $option, $value, ' class="form-control select2-formtemplib"  multiple="multiple" id="' . $name . '" placeholder="' . $label . '" ') . '
         </div>';
 
         array_push($this->form_buff, $html);

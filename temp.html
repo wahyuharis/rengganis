@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>APP TEMPLATE</title>
+    <link rel="icon" href="http://localhost/rengganis/assets/favicon.ico">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="http://localhost/rengganis/lte/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+
+    <!-- DataTables -->
+    <link rel="stylesheet"
+        href="http://localhost/rengganis/lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet"
+        href="http://localhost/rengganis/lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet"
+        href="http://localhost/rengganis/lte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="http://localhost/rengganis/lte/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet"
+        href="http://localhost/rengganis/lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet"
+        href="http://localhost/rengganis/lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+
+    <!-- BS Fileinput -->
+
+    <!-- Tostr -->
+    <link rel="stylesheet" href="http://localhost/rengganis//node_modules/toastr/build/toastr.min.css">
+
+    <!-- Daterangepicker -->
+    <link rel="stylesheet" href="http://localhost/rengganis/lte/plugins/daterangepicker/daterangepicker.css">
+
+    <link rel="stylesheet" href="http://localhost/rengganis/lte/plugins/summernote/summernote-bs4.min.css">
+
+    <link rel="stylesheet" href="http://localhost/rengganis/lte/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="http://localhost/rengganis/css_custom/custom.css">
+
+
+
+
+
+    <!-- jQuery -->
+    <script src="http://localhost/rengganis/lte/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="http://localhost/rengganis/lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- moment js -->
+    <script src="http://localhost/rengganis/lte/plugins/moment/moment.min.js"></script>
+
+    <script src="http://localhost/rengganis/lte/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
+
+
+    <!-- DataTables  & Plugins -->
+    <script src="http://localhost/rengganis/lte/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="http://localhost/rengganis/lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="http://localhost/rengganis/lte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="http://localhost/rengganis/lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="http://localhost/rengganis/lte/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="http://localhost/rengganis/lte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="http://localhost/rengganis/lte/plugins/jszip/jszip.min.js"></script>
+    <script src="http://localhost/rengganis/lte/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="http://localhost/rengganis/lte/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="http://localhost/rengganis/lte/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="http://localhost/rengganis/lte/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="http://localhost/rengganis/lte/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <!-- date-range-picker -->
+    <script src="http://localhost/rengganis/js_custom/daterange_locale.js"></script>
+    <script src="http://localhost/rengganis/lte/plugins/daterangepicker/daterangepicker.js"></script>
+
+    <!-- Select2 -->
+    <script src="http://localhost/rengganis/lte/plugins/select2/js/select2.full.min.js"></script>
+
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script
+        src="http://localhost/rengganis/lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="http://localhost/rengganis//node_modules/js-loading-overlay/dist/js-loading-overlay.min.js"></script>
+    <script src="http://localhost/rengganis//node_modules/toastr/build/toastr.min.js"></script>
+
+    <!-- Summernote -->
+    <script src="http://localhost/rengganis/lte/plugins/summernote/summernote-bs4.min.js"></script>
+
+    <!-- bootbox -->
+    <script src="http://localhost/rengganis//node_modules/bootbox/dist/bootbox.all.min.js"></script>
+
+    <!-- nummeral -->
+    <script src="http://localhost/rengganis//node_modules/numeral/min/numeral.min.js"></script>
+
+    <!-- currencyjs -->
+    <script src="http://localhost/rengganis//js_custom/currency.js"></script>
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+        <!-- Preloader -->
+        <!-- <div class="preloader flex-column justify-content-center align-items-center">
+            <img  src="http://localhost/rengganis/assets/loading.gif" alt="AdminLTELogo" height="60" width="60">
+        </div> -->
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="http://localhost/rengganis/lte/#" role="button"><i
+                            class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Home</a>
+                </li>
+
+            </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Navbar Search -->
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        Superadmin </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="http://localhost/rengganis/profile">Profile</a>
+                        <a class="dropdown-item" href="http://localhost/rengganis/profile/password">Password</a>
+                        <a class="dropdown-item" href="http://localhost/rengganis/logout">Logout</a>
+                    </div>
+                </li>
+
+
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="http://localhost/rengganis/lte/index3.html" class="brand-link">
+                <img src="http://localhost/rengganis/assets/app_icon.jpg" alt="AdminLTE Logo"
+                    class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">APP TEMPLATE</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="http://localhost/rengganis/assets/user-empty.png" class="img-circle elevation-2"
+                            alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">Superadmin</a>
+                    </div>
+                </div>
+
+                <!-- SidebarSearch Form -->
+                <div class="form-inline">
+                    <div class="input-group">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Search"
+                            aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-sidebar">
+                                <i class="fas fa-search fa-fw"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview"
+                        role="menu" data-accordion="false">
+                        <!-- <li class="nav-item">
+                            <a href="http://localhost/rengganis/home" class="nav-link">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <p>Beranda</p>
+                            </a>
+                        </li> -->
+                        <li class="nav-item   ">
+                            <a href="http://localhost/rengganis/home/" class="nav-link ">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <p>
+                                    Dashboard </p>
+                            </a>
+                        </li>
+                        <li class="nav-item   ">
+                            <a href="http://localhost/rengganis/kontak/" class="nav-link ">
+                                <i class="fas fa-address-book "></i>
+                                <p>
+                                    Kontak </p>
+                            </a>
+                        </li>
+                        <li class="nav-item  menu-is-opening menu-open ">
+                            <a href="#" class="nav-link ">
+                                <i class="fas fa-box "></i>
+                                <p>
+                                    Item <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview  style=" display: block;" ">
+                                                                                    <li class=" nav-item">
+                                <a href="http://localhost/rengganis/item/" class="nav-link  active ">
+                                    <i class="fas fa-box "></i>
+                                    <p>Item</p>
+                                </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="http://localhost/rengganis/item_jenis/" class="nav-link ">
+                                <i class="fas fa-tags "></i>
+                                <p>Jenis Item</p>
+                            </a>
+                        </li>
+                    </ul>
+                    </li>
+                    <li class="nav-item   ">
+                        <a href="#" class="nav-link ">
+                            <i class="fas fa-shopping-bag "></i>
+                            <p>
+                                Pembelian <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview   ">
+                            <li class="nav-item">
+                                <a href="http://localhost/rengganis/pembelian_order/" class="nav-link ">
+                                    <i class="fas fa-cart-plus "></i>
+                                    <p>Order</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://localhost/rengganis/pembelian/" class="nav-link ">
+                                    <i class="fas fa-receipt "></i>
+                                    <p>Pembelian</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://localhost/rengganis/pembelian_retur/" class="nav-link ">
+                                    <i class="far fa-handshake "></i>
+                                    <p>Retur</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item   ">
+                        <a href="#" class="nav-link ">
+                            <i class="fas fa-hand-holding-usd "></i>
+                            <p>
+                                Penjualan <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview   ">
+                            <li class="nav-item">
+                                <a href="http://localhost/rengganis/penjualan_order/" class="nav-link ">
+                                    <i class="fas fa-comment-dollar "></i>
+                                    <p>Order</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://localhost/rengganis/penjualan/" class="nav-link ">
+                                    <i class="fas fa-file-invoice-dollar "></i>
+                                    <p>Penjualan</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://localhost/rengganis/penjualan_retur/" class="nav-link ">
+                                    <i class="fas fa-hand-holding-heart "></i>
+                                    <p>Retur</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item   ">
+                        <a href="#" class="nav-link ">
+                            <i class="fas fa-boxes "></i>
+                            <p>
+                                Stok <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview   ">
+                            <li class="nav-item">
+                                <a href="http://localhost/rengganis/gudang/" class="nav-link ">
+                                    <i class="fas fa-house-damage "></i>
+                                    <p>Gudang</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://localhost/rengganis/sales/" class="nav-link ">
+                                    <i class="fas fa-people-carry "></i>
+                                    <p>Sales</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://localhost/rengganis/stock/" class="nav-link ">
+                                    <i class="fas fa-paste "></i>
+                                    <p>Daftar Stok</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item   ">
+                        <a href="#" class="nav-link ">
+                            <i class="fas fa-money-bill-alt "></i>
+                            <p>
+                                Keuangan <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview   ">
+                            <li class="nav-item">
+                                <a href="http://localhost/rengganis/rekening/" class="nav-link ">
+                                    <i class="fas fa-wallet "></i>
+                                    <p>Rekening & E-Wallet</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://localhost/rengganis/rekening_reg/" class="nav-link ">
+                                    <i class="fas fa-book "></i>
+                                    <p>Register Keuangan</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item   ">
+                        <a href="#" class="nav-link ">
+                            <i class="fas fa-user-cog "></i>
+                            <p>
+                                Managemen User <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview   ">
+                            <li class="nav-item">
+                                <a href="http://localhost/rengganis/user" class="nav-link ">
+                                    <i class="fas fa-users"></i>
+                                    <p>User</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://localhost/rengganis/jabatan" class="nav-link ">
+                                    <i class="fas fa-id-card"></i>
+                                    <p>Jabatan</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Import Item</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <!-- <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="http://localhost/rengganis/lte/#">Home</a></li>
+                                <li class="breadcrumb-item active">Dashboard v1</li>
+                            </ol> -->
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Import Item</h3>
+                        </div>
+                        <div class="card-body">
+                            <form action="http://localhost/rengganis/#" id="formlib_form" class=""
+                                enctype="multipart/form-data" method="post" accept-charset="utf-8">
+                                <div class="row">
+                                    <div class="col-sm-4">
+
+                                    </div>
+                                    <div class="col-sm-4">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label for="document_uploader">Dokumen</label><br>
+                                                    <label id="btn_document_uploader" class="btn btn-block btn-primary"
+                                                        for="document_uploader" style="margin-bottom:0px">Upload</label>
+                                                    <input type="file" class="d-none" id="document_uploader">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <input type="text" name="document" id="document" value=""
+                                                        class="d-none form-control">
+                                                </div>
+                                                <div class="col-12" id="preview">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <img id="img-preview_document" style="max-height: 100px;"
+                                                                src="#" class="d-none">
+                                                            <a id="pdf-preview_document" href="#" class="d-none">
+                                                                <!-- pdf-icon-item.png -->
+                                                                <img id="pdf-icon-preview" style="max-height: 100px;"
+                                                                    src="http://localhost/rengganis/assets/pdf-icon-item.png">
+                                                                <br><span></span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <span id="delete_file_document"
+                                                                class="btn btn-danger d-none">Delete</span>
+                                                        </div>
+                                                        <div class="col-4">
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- <pre> -->
+                                        <!-- </pre> -->
+
+                                        <script>
+                                            $(function () {
+
+
+
+                                                $('#document_uploader').on('change', function () {
+                                                    var fd = new FormData();
+                                                    var files = $('#document_uploader')[0].files;
+                                                    // Check file selected or not
+                                                    if (files.length > 0) {
+                                                        fd.append('image', files[0]);
+                                                        //fd.append("CustomField", "This is some extra data");
+                                                        JsLoadingOverlay.show();
+                                                        $.ajax({
+                                                            url: 'http://localhost/rengganis/upload_templib/upload_templib',
+                                                            type: 'POST',
+                                                            data: fd,
+                                                            success: function (response) {
+                                                                // $('#document').html(data.file_name);
+                                                                if (response.success) {
+                                                                    $('#document').val(response.data.file_name);
+                                                                    if (response.data.is_image) {
+                                                                        $('#img-preview_document').attr('src', 'http://localhost/rengganis/uploads/' + response.data.file_name);
+                                                                        $('#img-preview_document').removeClass('d-none');
+                                                                        $('#pdf-preview_document').addClass('d-none');
+                                                                        $('#delete_file_document').removeClass('d-none');
+
+                                                                    } else {
+                                                                        $('#pdf-preview_document').attr('href', 'http://localhost/rengganis/uploads/' + response.data.file_name);
+                                                                        $('#pdf-preview_document > span').html(response.data.file_name);
+                                                                        $('#pdf-preview_document').removeClass('d-none');
+                                                                        $('#img-preview_document').addClass('d-none');
+                                                                        $('#delete_file_document').removeClass('d-none');
+                                                                    }
+                                                                    $('#btn_document_uploader').addClass('d-none');
+                                                                    $('#delete_file_document').attr('file_name', response.data.file_name);
+                                                                    $('#delete_file_document').click(function () {
+                                                                        JsLoadingOverlay.show();
+                                                                        file_needto_delete = $(this).attr('file_name');
+                                                                        $.ajax({
+                                                                            url: 'http://localhost/rengganis/upload_templib/upload_templib/delete',
+                                                                            type: 'GET',
+                                                                            data: {
+                                                                                'file_name': file_needto_delete
+                                                                            },
+                                                                            success: function (response) {
+                                                                                console.log(response);
+                                                                                JsLoadingOverlay.hide();
+                                                                            },
+                                                                            error: function (err, xhr) {
+                                                                                JsLoadingOverlay.hide();
+                                                                            },
+                                                                        });
+                                                                        $('#delete_file_document').unbind('click');
+                                                                        $('#document').val('');
+                                                                        $('#delete_file_document').addClass('d-none');
+                                                                        $('#btn_document_uploader').removeClass('d-none');
+                                                                        $('#img-preview_document').addClass('d-none');
+                                                                        $('#pdf-preview_document').addClass('d-none');
+                                                                    });
+                                                                } else {
+                                                                    toastr.error(response.message);
+                                                                }
+                                                                JsLoadingOverlay.hide();
+                                                            },
+                                                            error: function (err, xhr) {
+
+                                                                JsLoadingOverlay.hide();
+                                                            },
+                                                            cache: false,
+                                                            contentType: false,
+                                                            processData: false
+                                                        });
+
+                                                    }
+                                                });
+
+                                            });
+                                        </script>
+                                    </div>
+                                </div>
+                                <input type="submit" name="save" value="simpan" id="save-button"
+                                    class="btn btn-primary" />
+                                <a href="http://localhost/rengganis/item" id="back-button"
+                                    class="btn btn-secondary">batal</a>
+                            </form>
+                        </div>
+                    </div>
+                    <script>
+                        $('#formlib_form').ready(function () {
+                            $('.select2-formtemplib').each(function () {
+                                // console.log( $(this).attr('id') );
+                                var idselect = $(this).attr('id');
+                                var placeholder = $('#' + idselect).attr('placeholder');
+                                $('#' + idselect).select2({
+                                    allowClear: true,
+                                    placeholder: 'select ' + placeholder + '...'
+                                });
+                            });
+
+                            $(document).on('select2:open', () => {
+                                document.querySelector('.select2-search__field').focus();
+                            });
+
+
+                            $('.summernote-textarea').each(function () {
+                                // console.log( $(this).attr('id') );
+                                var idselect = $(this).attr('id');
+                                $('#' + idselect).summernote({
+                                    height: 100,
+                                });
+                            });
+
+                            $('.singgle_date_picker_formlib').daterangepicker({
+                                "singleDatePicker": true,
+                                "locale": glob_daterange_locale,
+                            }, function (start, end, label) {
+                                // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+                            });
+
+                            $('.date_picker_formlib').daterangepicker({
+                                "locale": glob_daterange_locale,
+                            }, function (start, end, label) {
+                                // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+                            });
+
+                            $('.password-whenkeyup').keyup(function (e) {
+                                $(this).attr('type', 'password');
+                            })
+
+                            bsCustomFileInput.init();
+
+                        });
+
+                        $('#formlib_form').submit(function (e) {
+                            e.preventDefault();
+                            JsLoadingOverlay.show();
+                            $.ajax({
+                                url: 'http://localhost/rengganis/item/submit', // Url to which the request is send
+                                type: "POST", // Type of request to be send, called as method
+                                data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+                                contentType: false, // The content type used when sending data to the server.
+                                cache: false, // To unable request pages to be cached
+                                processData: false, // To send DOMDocument or non processed data file it is set to false
+                                success: function (data) // A function to be called if request succeeds
+                                {
+                                    if (data.success) {
+                                        window.location = 'http://localhost/rengganis/item';
+                                        console.log(data);
+                                    } else {
+                                        toastr.error(data.message);
+                                        error_data_hanlder(data.error);
+                                    }
+                                    console.log(data);
+                                    JsLoadingOverlay.hide();
+                                },
+                                error: function (err, txt) {
+                                    JsLoadingOverlay.hide();
+                                    console.log(err);
+                                    // console.log('================');
+                                    // console.log(txt);
+                                    bootbox.alert({
+                                        size: "large",
+                                        title: '<span class="text-danger" >Error ' + err.status + '<span>',
+                                        message: '<iframe id="bootframe_err"  src="about:blank" style="width:100%;height:500px;border:none" ></iframe>',
+                                        onShown: function (e) {
+                                            var doc = document.getElementById('bootframe_err').contentWindow.document;
+                                            doc.open();
+                                            doc.write(err.responseText);
+                                            doc.close();
+                                        }
+                                    });
+                                }
+                            });
+                        });
+
+                        function error_data_hanlder(error) {
+                            petik = '"';
+                            for (var key in error) {
+                                console.log(key + " " + error[key]);
+
+                                $('input[name=' + petik + key + petik + '], select[name=' + petik + key + petik + '],textarea[name=' + petik + key + petik + ' ]').addClass('is-invalid');
+
+                                var error_message = '<span id="errormessage_' + key + '" class="text-danger error_message_field"><br><small>' + error[key] + '</small><br></span>';
+                                // $('input[name=' + petik + key + petik + '], select[name=' + petik + key + petik + '],textarea[name=' + petik + key + petik + ' ]').before(error_message);
+                                $('input[name=' + petik + key + petik + '], select[name=' + petik + key + petik + '],textarea[name=' + petik + key + petik + ' ]').change(function () {
+                                    var input = $(this).val();
+                                    if (input.length > 0) {
+                                        $(this).removeClass('is-invalid');
+                                        // $('#errormessage_'+key+'').remove();
+                                        // $(this).parent().find('.error_message_field').remove();
+                                    }
+                                });
+                            }
+                        }
+                    </script>
+
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <strong>Template by <a href="https://adminlte.io/themes/v3/">AdminLTE.io</a>.</strong>
+
+            <div class="float-right d-none d-sm-inline-block">
+                <!-- <b>Version</b> 3.1.0 -->
+            </div>
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+
+    <script src="http://localhost/rengganis/lte/dist/js/adminlte.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="http://localhost/rengganis/lte/dist/js/demo.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <!-- <script src="http://localhost/rengganis/lte/dist/js/pages/dashboard.js"></script> -->
+    <script>
+        $(document).ready(function () {
+
+
+
+        });
+    </script>
+</body>
+
+</html>
