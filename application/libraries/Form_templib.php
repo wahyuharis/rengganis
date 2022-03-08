@@ -84,6 +84,22 @@ class Form_templib
         return $this;
     }
 
+    function custom_html_input($view_path, $data)
+    {
+        $ci = &get_instance();
+
+        $html_custom = $ci->load->view($view_path, $data, true);
+
+        $html = '
+        <div class="form-group">
+        ' . $html_custom . '
+        </div>';
+
+        array_push($this->form_buff, $html);
+
+        return $this;
+    }
+
     function text_input($label, $name, $value)
     {
         $ci = &get_instance();
@@ -130,7 +146,7 @@ class Form_templib
             'value' => $value,
             'label' => $label,
         );
-        $html .= $ci->load->view('template/file_upload', $dataviews,true);
+        $html .= $ci->load->view('template/file_upload', $dataviews, true);
 
         array_push($this->form_buff, $html);
 
@@ -196,7 +212,7 @@ class Form_templib
         $html = '
         <div class="form-group">
             <label for="' . $name . '" >' . $label . '</label>
-            ' . form_dropdown($name."[]", $option, $value, ' class="form-control select2-formtemplib"  multiple="multiple" id="' . $name . '" placeholder="' . $label . '" ') . '
+            ' . form_dropdown($name . "[]", $option, $value, ' class="form-control select2-formtemplib"  multiple="multiple" id="' . $name . '" placeholder="' . $label . '" ') . '
         </div>';
 
         array_push($this->form_buff, $html);

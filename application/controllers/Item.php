@@ -272,8 +272,37 @@ class Item extends CI_Controller
                 $success = true;
             } else {
                 $success = false;
-                $message .= "Item Jenis Kosong";
+                $message .= "<br>Item Jenis Kosong";
                 $error['item_jenis[]'] = "Item Jenis Kosong";
+            }
+        }
+
+        if ($success) {
+            $foto = in_post('foto');
+            $foto_arr = explode('.', $foto);
+            $foto_ext = end($foto_arr);
+            $foto_ext = strtolower($foto_ext);
+
+            if (in_array($foto_ext, ['jpg', 'jpeg', 'png'])) {
+                $success = true;
+            } else {
+                $success = false;
+                $message .= "<br>Format Foto yang diupload hanya boleh jpg dan png";
+            }
+        }
+
+
+        if ($success) {
+            $documen = in_post('document');
+            $documen_arr = explode('.', $documen);
+            $documen_ext = end($documen_arr);
+            $documen_ext = strtolower($documen_ext);
+
+            if (in_array($documen_ext, ['pdf'])) {
+                $success = true;
+            } else {
+                $success = false;
+                $message .= "<br>Format Dokumen yang diupload hanya boleh pdf";
             }
         }
 
