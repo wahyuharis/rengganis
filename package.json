@@ -3,6 +3,7 @@
     "bootbox": "^5.5.2",
     "jquery-validation": "^1.19.3",
     "js-loading-overlay": "^1.2.0",
+    "numeral": "^2.0.6",
     "toastr": "^2.1.4"
   }
 }

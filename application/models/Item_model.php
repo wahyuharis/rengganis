@@ -9,6 +9,7 @@ class Item_model extends CI_Model
     {
         $order = array(
             'item.id_item',
+            'item.kode_item',
             'item.item_nama',
             'item.satuan',
             'item.harga_jual',
@@ -26,6 +27,7 @@ class Item_model extends CI_Model
 
         $sql = "SELECT 
         item.id_item, 
+        item.kode_item,
         item.item_nama,
          item.satuan, 
          item.harga_jual, 

@@ -77,3 +77,9 @@
 <!-- bootbox -->
 <script src="<?=base_url()?>/node_modules/bootbox/dist/bootbox.all.min.js"></script>
 
+<!-- nummeral -->
+<script src="<?=base_url()?>/node_modules/numeral/min/numeral.min.js"></script>
+
+<!-- currencyjs -->
+<script src="<?=base_url()?>/js_custom/currency.js"></script>
+
