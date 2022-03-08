@@ -8,7 +8,7 @@ class Auth
         if (!(in_array(strtolower($ci->uri->segment(1)), ['login', 'logout']))) {
             $this->is_login();
 
-            if (!(in_array(strtolower($ci->uri->segment(1)), ['home']))) {
+            if (!(in_array(strtolower($ci->uri->segment(1)), ['home','profile']))) {
                 $this->cek_hakakses();
             }
         }
