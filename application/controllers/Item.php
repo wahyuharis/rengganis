@@ -372,29 +372,53 @@ class Item extends CI_Controller
 
     function import()
     {
-        $this->load->library('Form_templib');
-        $item_model = new Item_model();
-
         $template = new LTE_Temp();
-        $form_templib = new Form_templib();
-        $page_title = 'Import Item';
 
-        $form_templib->set_submit_url($this->url_controller . '/import_submit');
-        $form_templib->set_base_url($this->url_controller);
-        $form_templib->set_form_title($page_title);
+        $template->set_content('home');
+        $template->set_title_page('Import Item');
 
-        $form_templib->form_upload('Excel file', 'excel_file', '');
-
-        $form_templib->select_input('Kosongkan Tabel', 'truncate', ['1' => 'Ya', '0' => 'Tidak'], '');
-
-        $form_templib->set_col1();
-
-        $html = '';
-        $html .= $form_templib->generate();
+        $data_view = array();
+        $html = load_view_html('item/item_import', $data_view);
 
         $template->set_content_html($html);
-        $template->set_title_page($page_title);
 
         $template->run();
+    }
+
+    function import_submit()
+    {
+        $this->load->library('Form_templib');
+        $form_templib = new Form_templib();
+        //end init
+
+        //declare response
+        $error = array();
+        $success = false;
+        $message = '';
+        $data = array();
+
+        $post_data = $this->input->post();
+        $truncate_table = in_post('truncate_table');
+
+        $config['upload_path']          = './import/upload/';
+        $config['allowed_types']        = 'xls|xlsx';
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('excel_import')) {
+            $message = $this->upload->display_errors();
+        } else {
+            $data = $this->upload->data();
+            $success = true;
+        }
+
+        /*
+        IMPORT METHOD
+        */
+
+        $form_templib->set_response_data($data);
+        $form_templib->set_response_error($error);
+        $form_templib->set_response_message($message);
+        $form_templib->set_response_success($success);
+        //send response
+        $form_templib->response_submit();
     }
 }
