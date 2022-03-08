@@ -56,7 +56,10 @@
                 delete_handler();
             },
             "initComplete": function(settings, json) {
-                $('#btn_add_def').appendTo('.add_btn_class');
+                // $('#btn_add_def').appendTo('.add_btn_class');
+                $("#item_list_custom_button").appendTo(".add_btn_class");
+                $("#item_list_custom_button").removeClass('d-none');
+
             },
             "language": {
                 "loadingRecords": '<h1><i class="fas fa-spinner fa-spin"></i></h1>',

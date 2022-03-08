@@ -255,7 +255,10 @@ class User extends CI_Controller
 		if(!empty(trim($primary_id)) ){
 			$id_jabatan=get_row('_user',['id_user'=>$primary_id ])['id_jabatan'];
 			$jabatan=get_row('_jabatan',['id_jabatan'=>$id_jabatan ])['nama_jabatan'];
-			if($jabatan=='sales'){
+
+			$jabatan2=get_row('_jabatan',['id_jabatan'=>in_post('jabatan') ])['nama_jabatan'];
+
+			if($jabatan=='sales' && (!($jabatan2=='sales')) ){
 				$success = false;
 				$message .= "User Jabatan Sales Tidak Boleh diubah Jabatannya<br>";
 				$message .= "Jika Ikin Merubah Jabatan Silahkan Tambahkan User Baru<br>";
@@ -264,7 +267,8 @@ class User extends CI_Controller
 			}
 		}
 
-		// print_r2($post_data);
+		// var_dump($success);
+		// echo $jabatan2;
 		// die();
 
 		$this->load->model('Sales_model');

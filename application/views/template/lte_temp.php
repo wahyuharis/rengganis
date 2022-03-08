@@ -40,8 +40,8 @@
                     <?= ucwords( $this->session->userdata('username') )?>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Profile</a>
-                        <a class="dropdown-item" href="#">Password</a>
+                        <a class="dropdown-item" href="<?=base_url('profile')?>">Profile</a>
+                        <a class="dropdown-item" href="<?=base_url('profile/password')?>">Password</a>
                         <a class="dropdown-item" href="<?=base_url('logout')?>">Logout</a>
                     </div>
                 </li>

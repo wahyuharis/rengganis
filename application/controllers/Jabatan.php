@@ -23,7 +23,7 @@ class Jabatan extends CI_Controller
 			'locked',
 		);
 
-		$datatables->set_add_url(base_url('jabatan/add'));
+		// $datatables->set_add_url(base_url('jabatan/add'));
 		$datatables->set_column_title($column_title);
 		$datatables->set_url_serverside('jabatan/datatables_serverside');
 		// $datatables->set_filter_form('#filter-dtt-list');
@@ -68,8 +68,9 @@ class Jabatan extends CI_Controller
 	}
 	function _callback_action($row)
 	{
-		$action_btn = '<a href="' . base_url('jabatan/edit/' . $row['id_jabatan']) . '" 
-						class="btn btn-primary btn-sm" >Edit</a>';
+		$action_btn ='';
+		// $action_btn = '<a href="' . base_url('jabatan/edit/' . $row['id_jabatan']) . '" 
+		// 				class="btn btn-primary btn-sm" >Edit</a>';
 		$action_btn .= ' <a href="#"  delete_id="' . $row['id_jabatan'] . '"
 						delete_action="' . base_url("jabatan/delete_submit/") . '"
 						class="btn btn-danger btn-sm delete_handler" >Delete</a>';

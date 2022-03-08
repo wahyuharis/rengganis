@@ -95,7 +95,7 @@ $autoload['drivers'] = array();
 |	$autoload['helper'] = array('url', 'file');
 */
 //$autoload['helper'] = array();
-$autoload['helper'] = array('url', 'file', 'form', 'haris', 'lte_temp');
+$autoload['helper'] = array('url', 'file', 'form', 'haris','currency', 'lte_temp');
 /*
 | -------------------------------------------------------------------
 |  Auto-load Config files

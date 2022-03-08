@@ -134,29 +134,11 @@ function print_r2($var)
     die();
 }
 
-function intval2($str)
+function var_dump2($var)
 {
-    $int = str_replace(',', '', $str);
-    $int = intval($int);
-    return $int;
-}
-
-function is_float2($float)
-{
-    $float = floatval($float) . "";
-    $pos = strpos($float, '.');
-    if ($pos > 0) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function floatval2($str)
-{
-    $int = str_replace(',', '', $str);
-    $int = floatval($int);
-    return $int;
+    echo "<pre>";
+    var_dump($var);
+    die();
 }
 
 function dropdown_array($result_array, $index, $label, $placeholder = "", $empty_opt = true)

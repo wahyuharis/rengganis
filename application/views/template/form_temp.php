@@ -30,8 +30,8 @@ $action = '#';
                 } ?>
             </div>
         </div>
-        <?= form_submit('save', 'simpan', ' class="btn btn-primary" ') ?>
-        <?= anchor(base_url($base_url), 'batal', ' class="btn btn-secondary" ') ?>
+        <?= form_submit('save', 'simpan', ' id="save-button" class="btn btn-primary" ') ?>
+        <?= anchor(base_url($base_url), 'batal', '  id="back-button"  class="btn btn-secondary" ') ?>
         <?= form_close() ?>
     </div>
 </div>
