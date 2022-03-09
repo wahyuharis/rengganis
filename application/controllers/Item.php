@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-// require 'vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -69,6 +68,7 @@ class Item extends CI_Controller
 
         //get sql script from model
         $sql_sript = $item_model->list_sql($search, $orderby);
+        $datatables->set_total_row($item_model->get_total_row($search));
         $datatables->set_sql($sql_sript);
 
         $datatables->set_callback_column(array($this, '_callback_column'));

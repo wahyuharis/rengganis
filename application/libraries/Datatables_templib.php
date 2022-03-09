@@ -8,6 +8,7 @@ class Datatables_templib
 	private $order_arr = false;
 	private $add_url = false;
 	private $filter_form_id = false;
+	private $total_row = false;
 
 	private $sql = '';
 	private $method_callback = false;
@@ -24,6 +25,17 @@ class Datatables_templib
 	{
 		$this->url_serverside = $url_serverside;
 		return $this;
+	}
+
+	function set_total_row($total_row = 0)
+	{
+		$this->total_row = $total_row;
+		return $this;
+	}
+
+	function get_total_row()
+	{
+		return $this->total_row;
 	}
 
 	function set_add_url($add_url)
@@ -51,7 +63,7 @@ class Datatables_templib
 		$search_arr = $ci->input->get('search');
 		$search = '';
 		if (isset($search_arr['value'])) {
-			$search = $search_arr['value'];
+			$search = trim($search_arr['value']);
 		}
 
 		return $search;
@@ -156,8 +168,13 @@ class Datatables_templib
 		$sql = $this->sql;
 
 
-		$db0 = $ci->db->query($sql);
-		$total_row = $db0->num_rows();
+		$total_row = 0;
+		if (!$this->total_row) {
+			$db0 = $ci->db->query($sql);
+			$total_row = $db0->num_rows();
+		}else{
+			$total_row=$this->total_row;
+		}
 
 		$start = intval($ci->input->get('start'));
 		$limit = intval($ci->input->get('length'));

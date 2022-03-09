@@ -40,19 +40,35 @@ class Item_model extends CI_Model
          WHERE item.deleted=0 
         and
         (
+            item.kode_item like '%" . $this->db->escape_str($search) . "%'  or
             item.item_nama like '%" . $this->db->escape_str($search) . "%'  or
             item.satuan like '%" . $this->db->escape_str($search) . "%'  or
             item.harga_jual like '%" . $this->db->escape_str($search) . "%'  or
             item.harga_beli like '%" . $this->db->escape_str($search) . "%'    or
             item_jenis_imp_f(item.id_item) like  '%" . $this->db->escape_str($search) . "%' 
         )
-        
-        GROUP BY item.id_item
 
             " . $orderby . "
         ";
 
         return $sql;
+    }
+
+    function get_total_row($search=''){
+        $where="item.deleted=0 
+        and
+        (
+            item.kode_item like '%" . $this->db->escape_str($search) . "%'  or
+            item.item_nama like '%" . $this->db->escape_str($search) . "%'  or
+            item.satuan like '%" . $this->db->escape_str($search) . "%'  or
+            item.harga_jual like '%" . $this->db->escape_str($search) . "%'  or
+            item.harga_beli like '%" . $this->db->escape_str($search) . "%'    or
+            item_jenis_imp_f(item.id_item) like  '%" . $this->db->escape_str($search) . "%' 
+        )";
+        $this->db->where($where);
+        $this->db->select('item.id_item');
+
+        return $this->db->count_all_results('item');
     }
 
     function get_row($id)

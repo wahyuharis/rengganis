@@ -28,10 +28,17 @@
 </div>
 <script>
     $(document).ready(function() {
+        $.fn.dataTable.ext.buttons.refresh = {
+            text: 'Refresh',
+            action: function(e, dt, node, config) {
+                dt.clear().draw();
+                dt.ajax.reload();
+            }
+        };
 
         var table = $('#dtt_table').DataTable({
             "dom": "<'row mb-4'<'col-6 add_btn_class'><'col-6 text-right'B>>" + "<'row'<'col-sm-6'l><'col-sm-6'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-            "buttons": ["copy", "csv", "excel", "pdf"],
+            "buttons": ["refresh","copy", "csv", "excel", "pdf"],
             "pagingType": "full",
             "serverSide": true,
             "processing": true,
