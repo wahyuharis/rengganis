@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require 'vendor/autoload.php';
+// require 'vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -282,8 +282,8 @@ class Item extends CI_Controller
             }
         }
 
-        if ($success) {
-            $foto = in_post('foto');
+        $foto = in_post('foto');
+        if ($success && strlen(trim($foto))>0 ) {
             $foto_arr = explode('.', $foto);
             $foto_ext = end($foto_arr);
             $foto_ext = strtolower($foto_ext);
@@ -296,9 +296,8 @@ class Item extends CI_Controller
             }
         }
 
-
-        if ($success) {
-            $documen = in_post('document');
+        $documen = in_post('document');
+        if ($success && strlen(trim($documen))>0 ) {
             $documen_arr = explode('.', $documen);
             $documen_ext = end($documen_arr);
             $documen_ext = strtolower($documen_ext);
@@ -363,6 +362,7 @@ class Item extends CI_Controller
                 }
             }
             $this->db->trans_complete();
+            $this->session->set_flashdata('success_message','Data Telah Berhasil Di Simpan');
         }
 
 
@@ -472,36 +472,54 @@ class Item extends CI_Controller
                         $set['document'] = trim($row[7]);
                         $set['keterangan'] = trim($row[8]);
 
-                        $this->db->insert('item', $set);
-                        $insert_id = $this->db->insert_id();
-
-                        $jenis_item_arr = explode('/', $row[5]);
-                        foreach ($jenis_item_arr as $row2) {
-                            $dbjenis = $this->db->get_where('item_jenis', ['item_jenis_nama' => $row2]);
-                            $id_dbjenis = false;
-                            if ($dbjenis->num_rows() > 0) {
-                                $id_dbjenis = $dbjenis->row()->id_item_jenis;
-                            } else {
-                                $this->db->insert('item_jenis', ['item_jenis_nama' => trim($row2)]);
-                                $id_dbjenis = $this->db->insert_id();
-                            }
-
-                            if ($id_dbjenis) {
-                                $rel_jenis = array(
-                                    'id_item' => $insert_id,
-                                    'id_item_jenis' => $id_dbjenis
-                                );
-                                // $this->db->delete('item_rel_item_jenis',['id_item'=>$insert_id]);
-                                
-                                $this->db->insert('item_rel_item_jenis', $rel_jenis);
-                            }
+                        $import_process = true;
+                        if (empty(trim($row[0]))) {
+                            $import_process = false;
                         }
-                        // array_push($buff,$set);
+                        if (empty(trim($row[1]))) {
+                            $import_process = false;
+                        }
+                        if (empty(trim($row[2]))) {
+                            $import_process = false;
+                        }
+                        if (empty(trim($row[3]))) {
+                            $import_process = false;
+                        }
+                        if (empty(trim($row[4]))) {
+                            $import_process = false;
+                        }
 
+                        if ($import_process) {
+                            $this->db->insert('item', $set);
+                            $insert_id = $this->db->insert_id();
+
+                            $jenis_item_arr = explode('/', $row[5]);
+                            foreach ($jenis_item_arr as $row2) {
+                                $dbjenis = $this->db->get_where('item_jenis', ['item_jenis_nama' => $row2]);
+                                $id_dbjenis = false;
+                                if ($dbjenis->num_rows() > 0) {
+                                    $id_dbjenis = $dbjenis->row()->id_item_jenis;
+                                } else {
+                                    $this->db->insert('item_jenis', ['item_jenis_nama' => trim($row2)]);
+                                    $id_dbjenis = $this->db->insert_id();
+                                }
+
+                                if ($id_dbjenis) {
+                                    $rel_jenis = array(
+                                        'id_item' => $insert_id,
+                                        'id_item_jenis' => $id_dbjenis
+                                    );
+                                    // $this->db->delete('item_rel_item_jenis',['id_item'=>$insert_id]);
+
+                                    $this->db->insert('item_rel_item_jenis', $rel_jenis);
+                                }
+                            }
+                            // array_push($buff,$set);
+                        }
                     }
                     $i++;
                 }
-                $this->session->set_flashdata('success_message','Data Telah Berhasil Di import');
+                $this->session->set_flashdata('success_message', 'Data Telah Berhasil Di import');
                 $this->db->trans_complete();
                 // print_r2($buff);
             }
@@ -515,19 +533,5 @@ class Item extends CI_Controller
         $form_templib->set_response_success($success);
         //send response
         $form_templib->response_submit();
-    }
-
-    function format_excel_true($excel_data_heading)
-    {
-        // return (trim($excel_data_heading[0]) == 'Kode'  &&
-        //     trim($excel_data_heading[1]) == 'Nama Item' &&
-        //     trim($excel_data_heading[2]) == 'Satuan' &&
-        //     trim($excel_data_heading[3]) == 'Harga Jual' &&
-        //     trim($excel_data_heading[4]) == 'Harga Beli' &&
-        //     trim($excel_data_heading[5]) == 'Kategori'  &&
-        //     trim($excel_data_heading[6]) == 'Foto' &&
-        //     trim($excel_data_heading[7]) == 'Document' &&
-        //     trim($excel_data_heading[8]) == 'Keterangan'
-        // );
     }
 }

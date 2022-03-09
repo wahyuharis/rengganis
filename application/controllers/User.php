@@ -337,6 +337,7 @@ class User extends CI_Controller
 				}
 			}
 			$this->db->trans_complete();
+			$this->session->set_flashdata('success_message','Data Telah Tersimpan');
 		}
 
 		// sdfjskdfj

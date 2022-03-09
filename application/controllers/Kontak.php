@@ -272,6 +272,8 @@ class Kontak extends CI_Controller
 
 				$this->db->update('kontak', $set, $where);
 			}
+			$this->session->set_flashdata('success_message','Data Telah Tersimpan');
+
 		}
 
 		// sdfjskdfj

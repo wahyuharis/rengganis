@@ -250,6 +250,8 @@ class Gudang extends CI_Controller
                 );
                 $this->db->update('gudang', $set, $where);
             }
+			$this->session->set_flashdata('success_message','Data Telah Tersimpan');
+
         }
 
 
