@@ -7,21 +7,21 @@
             <div class="card-body">
 
                 <div id="display-1" class="row">
-                    <div class="col-12 text-center" style="min-height: 500px;">
+                    <div class="col-12 text-center" style="min-height: 300px;">
                         <br><br>
                         <a href="<?= base_url('import/template/item.xlsx') ?>" class="btn btn-primary btn-lg">Download EXCEL Template</a>
                     </div>
                 </div>
 
                 <div id="display-2" class="row" style="display: none;">
-                    <div class="col-4" style="min-height: 500px;">
+                    <div class="col-4" style="min-height: 300px;">
                         <?= form_open_multipart('#', ' id="form_import_item" ') ?>
                         <div class="form-group">
                             <label for="truncate_table">Hapus Semua Data ?</label>
                             <?= form_dropdown('truncate_table', [null => '-- Pilih Salah Satu --', 'Y' => 'Ya', 'N' => 'Tidak'], [], ' class="form-control" ') ?>
                         </div>
                         <div class="form-group">
-                            <label for="excel_import">EXCEL DATA</label>
+                            <label for="excel_import">EXCEL FILE</label>
                             <div class="input-group">
                                 <div class="custom-file">
                                     <input type="file" name="excel_import" class="custom-file-input" id="excel_import">
@@ -35,9 +35,9 @@
                         <button class="btn btn-primary" type="submit">Upload</button>
                         <?= form_close() ?>
                     </div>
-                    <div class="col-4" style="min-height: 500px;">
+                    <div class="col-4" style="min-height: 300px;">
                     </div>
-                    <div class="col-4" style="min-height: 500px;">
+                    <div class="col-4" style="min-height: 300px;">
                     </div>
                 </div>
 
