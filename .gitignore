@@ -20,6 +20,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /uploads/*
 /lte/
 /assets/upload/*
+/import/upload/*
 
 # IDE Files
 #-------------------------
@@ -34,3 +35,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /tests/tests/
 /tests/results/
+

@@ -37,12 +37,12 @@
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                    <?= ucwords( $this->session->userdata('username') )?>
+                        <?= ucwords($this->session->userdata('username')) ?>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="<?=base_url('profile')?>">Profile</a>
-                        <a class="dropdown-item" href="<?=base_url('profile/password')?>">Password</a>
-                        <a class="dropdown-item" href="<?=base_url('logout')?>">Logout</a>
+                        <a class="dropdown-item" href="<?= base_url('profile') ?>">Profile</a>
+                        <a class="dropdown-item" href="<?= base_url('profile/password') ?>">Password</a>
+                        <a class="dropdown-item" href="<?= base_url('logout') ?>">Logout</a>
                     </div>
                 </li>
 
@@ -67,7 +67,7 @@
                         <img src="<?= base_url("assets/" . USER_EMPTY) ?>" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block"><?= ucwords( $this->session->userdata('username'))?></a>
+                        <a href="#" class="d-block"><?= ucwords($this->session->userdata('username')) ?></a>
                     </div>
                 </div>
 
@@ -94,10 +94,10 @@
                         </li> -->
                         <?php foreach ($menu_sidebar as $row) { ?>
                             <?php
-                             $is_open = '  ';
-                             $treeview = '  ';
+                            $is_open = '  ';
+                            $treeview = '  ';
                             if (isset($row['child'])) {
-                               
+
                                 $is_child_active = check_child(uri_segment2(1), $row['child']);
                                 if ($is_child_active) {
                                     $is_open = ' menu-is-opening menu-open ';
@@ -138,7 +138,7 @@
                                                 }
                                                 ?>
                                                 <a href="<?= base_url($row2['url']) ?>" class="nav-link <?= $is_active ?>">
-                                                    <i class="<?=$row2['icon']?>"></i>
+                                                    <i class="<?= $row2['icon'] ?>"></i>
                                                     <p><?= $row2['name'] ?></p>
                                                 </a>
                                             </li>
@@ -208,17 +208,23 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <!-- <script src="<?= base_url("lte/") ?>dist/js/pages/dashboard.js"></script> -->
     <script>
-  $(document).ready(function() {
+        $(document).ready(function() {
 
 
-    <?php if ( strlen( $this->session->flashdata('error_message')) > 0) { ?>
+            <?php if (strlen($this->session->flashdata('error_message')) > 0) { ?>
 
-      toastr.error('<?= $this->session->flashdata('error_message') ?>','Maaf');
+                toastr.error('<?= $this->session->flashdata('error_message') ?>', 'Maaf');
 
-    <?php } ?>
+            <?php } ?>
 
-  });
-</script>
+            <?php if (strlen($this->session->flashdata('success_message')) > 0) { ?>
+
+                toastr.success('<?= $this->session->flashdata('success_message') ?>', 'Info');
+
+            <?php } ?>
+
+        });
+    </script>
 </body>
 
 </html>

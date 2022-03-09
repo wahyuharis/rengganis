@@ -3,6 +3,7 @@
         <div class="card">
             <div class="card-header text-center">
                 <h4 id="card-title">Download Template EXCEL</h4>
+                <h4 id="card-title2" style="display: none;">UPLOAD DATA EXCEL</h4>
             </div>
             <div class="card-body">
 
@@ -25,10 +26,10 @@
                             <div class="input-group">
                                 <div class="custom-file">
                                     <input type="file" name="excel_import" class="custom-file-input" id="excel_import">
-                                    <label class="custom-file-label" for="excel_import">EXCEL DATA file</label>
+                                    <label class="custom-file-label" for="excel_import">Choose File</label>
                                 </div>
                                 <div class="input-group-append">
-                                    <!-- <span class="input-group-text">Upload</span> -->
+                                    <span id="excel_file_import_clear" class="btn btn-secondary">Clear</span>
                                 </div>
                             </div>
                         </div>
@@ -59,6 +60,8 @@
             $('#display-1').hide();
             $('#display-2').show();
 
+            $('#card-title').hide();
+            $('#card-title2').show();
         });
         $('#prev-btn').click(function() {
             $('#next-btn').show();
@@ -67,15 +70,23 @@
             $('#display-2').hide();
             $('#display-1').show();
 
+            $('#card-title').show();
+            $('#card-title2').hide();
         });
+
+        $('#excel_file_import_clear').click(function(){
+            $('input[name=excel_import]').val(null);
+            $('label.custom-file-label[for=excel_import]').html('');
+        });
+
         // $('.select2-formtemplib').each(function() {
-            // console.log( $(this).attr('id') );
-            // var idselect = $(this).attr('id');
-            // var placeholder = $('#' + idselect).attr('placeholder');
-            $('select[name=truncate_table]').select2({
-                allowClear: true,
-                placeholder: 'select ...'
-            });
+        // console.log( $(this).attr('id') );
+        // var idselect = $(this).attr('id');
+        // var placeholder = $('#' + idselect).attr('placeholder');
+        $('select[name=truncate_table]').select2({
+            allowClear: true,
+            placeholder: 'select ...'
+        });
         // });
 
         bsCustomFileInput.init();
@@ -84,7 +95,7 @@
             e.preventDefault();
             JsLoadingOverlay.show();
             $.ajax({
-                url: '<?=base_url('item/import_submit')?>', // Url to which the request is send
+                url: '<?= base_url('item/import_submit') ?>', // Url to which the request is send
                 type: "POST", // Type of request to be send, called as method
                 data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
                 contentType: false, // The content type used when sending data to the server.
@@ -93,7 +104,7 @@
                 success: function(data) // A function to be called if request succeeds
                 {
                     if (data.success) {
-                        window.location = '<?=base_url('item/import')?>';
+                        window.location = '<?= base_url('item/') ?>';
                         console.log(data);
                     } else {
                         toastr.error(data.message);

@@ -1,6 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+require 'vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Item extends CI_Controller
 {
 
@@ -401,18 +406,108 @@ class Item extends CI_Controller
         $truncate_table = in_post('truncate_table');
 
         $config['upload_path']          = './import/upload/';
-        $config['allowed_types']        = 'xls|xlsx';
+        $config['allowed_types']        = 'xlsx';
+        $config['file_name']        = 'item_' . uniqid();
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload('excel_import')) {
             $message = $this->upload->display_errors();
         } else {
-            $data = $this->upload->data();
+            $upload_data = $this->upload->data();
             $success = true;
         }
 
-        /*
-        IMPORT METHOD
-        */
+        // print_r2($truncate_table);
+        if (empty(trim($truncate_table))) {
+            $success = false;
+            $message = "<p>Anda Belum Menentukan apakah tabel akan dikosongkan atau tidak</p>";
+        }
+
+        if ($success) {
+            $file_name = $upload_data['file_name'];
+            $spreadsheet = new Spreadsheet();
+
+            $inputFileType = 'Xlsx';
+            $inputFileName = './import/upload/' . $file_name;
+
+            /**  Create a new Reader of the type defined in $inputFileType  **/
+            $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
+            /**  Advise the Reader that we only want to load cell data  **/
+            $reader->setReadDataOnly(true);
+
+            $reader->setLoadSheetsOnly('input_item');
+            $spreadsheet = $reader->load($inputFileName);
+
+            $worksheet = $spreadsheet->getActiveSheet();
+            // echo "<pre>";
+            $excel_data = $worksheet->toArray();
+
+            // print_r2($excel_data);
+            //CHECK FORMAT
+
+            if (is_array($excel_data)) {
+                $success = true;
+            } else {
+                $success = false;
+                $message = "Data Excel Tidak Terbaca";
+            }
+
+            if ($success) {
+                $i = 0;
+                // $buff=array();
+                $this->db->trans_start();
+                if ($truncate_table == 'Y') {
+                    $this->db->truncate('item');
+                    // $this->db->truncate('item_jenis');
+                    $this->db->truncate('item_rel_item_jenis');
+                }
+
+                foreach ($excel_data as $row) {
+                    if ($i > 3) { //iteration start
+                        $set['kode_item'] = trim($row[0]);
+                        $set['item_nama'] = trim($row[1]);
+                        $set['satuan'] = trim($row[2]);
+                        $set['harga_jual'] = floatval2($row[3]);
+                        $set['harga_beli'] = floatval2($row[4]);
+                        $set['foto'] = trim($row[6]);
+                        $set['document'] = trim($row[7]);
+                        $set['keterangan'] = trim($row[8]);
+
+                        $this->db->insert('item', $set);
+                        $insert_id = $this->db->insert_id();
+
+                        $jenis_item_arr = explode('/', $row[5]);
+                        foreach ($jenis_item_arr as $row2) {
+                            $dbjenis = $this->db->get_where('item_jenis', ['item_jenis_nama' => $row2]);
+                            $id_dbjenis = false;
+                            if ($dbjenis->num_rows() > 0) {
+                                $id_dbjenis = $dbjenis->row()->id_item_jenis;
+                            } else {
+                                $this->db->insert('item_jenis', ['item_jenis_nama' => trim($row2)]);
+                                $id_dbjenis = $this->db->insert_id();
+                            }
+
+                            if ($id_dbjenis) {
+                                $rel_jenis = array(
+                                    'id_item' => $insert_id,
+                                    'id_item_jenis' => $id_dbjenis
+                                );
+                                // $this->db->delete('item_rel_item_jenis',['id_item'=>$insert_id]);
+                                
+                                $this->db->insert('item_rel_item_jenis', $rel_jenis);
+                            }
+                        }
+                        // array_push($buff,$set);
+
+                    }
+                    $i++;
+                }
+                $this->session->set_flashdata('success_message','Data Telah Berhasil Di import');
+                $this->db->trans_complete();
+                // print_r2($buff);
+            }
+        }
+
+
 
         $form_templib->set_response_data($data);
         $form_templib->set_response_error($error);
@@ -420,5 +515,19 @@ class Item extends CI_Controller
         $form_templib->set_response_success($success);
         //send response
         $form_templib->response_submit();
+    }
+
+    function format_excel_true($excel_data_heading)
+    {
+        // return (trim($excel_data_heading[0]) == 'Kode'  &&
+        //     trim($excel_data_heading[1]) == 'Nama Item' &&
+        //     trim($excel_data_heading[2]) == 'Satuan' &&
+        //     trim($excel_data_heading[3]) == 'Harga Jual' &&
+        //     trim($excel_data_heading[4]) == 'Harga Beli' &&
+        //     trim($excel_data_heading[5]) == 'Kategori'  &&
+        //     trim($excel_data_heading[6]) == 'Foto' &&
+        //     trim($excel_data_heading[7]) == 'Document' &&
+        //     trim($excel_data_heading[8]) == 'Keterangan'
+        // );
     }
 }
