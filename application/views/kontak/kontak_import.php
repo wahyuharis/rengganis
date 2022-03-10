@@ -10,13 +10,13 @@
                 <div id="display-1" class="row">
                     <div class="col-12 text-center" style="min-height: 300px;">
                         <br><br>
-                        <a href="<?= base_url('import/template/item.xlsx') ?>" class="btn btn-primary btn-lg">Download EXCEL Template</a>
+                        <a href="<?= base_url('import/template/kontak.xlsx') ?>" class="btn btn-primary btn-lg">Download EXCEL Template</a>
                     </div>
                 </div>
 
                 <div id="display-2" class="row" style="display: none;">
                     <div class="col-4" style="min-height: 300px;">
-                        <?= form_open_multipart('#', ' id="form_import_item" ') ?>
+                        <?= form_open_multipart('#', ' id="form_import_kontak" ') ?>
                         <div class="form-group">
                             <label for="truncate_table">Hapus Semua Data ?</label>
                             <?= form_dropdown('truncate_table', [null => '-- Pilih Salah Satu --', 'Y' => 'Ya', 'N' => 'Tidak'], [], ' class="form-control" ') ?>
@@ -91,11 +91,11 @@
 
         bsCustomFileInput.init();
 
-        $('#form_import_item').submit(function(e) {
+        $('#form_import_kontak').submit(function(e) {
             e.preventDefault();
             JsLoadingOverlay.show();
             $.ajax({
-                url: '<?= base_url('item/import_submit') ?>', // Url to which the request is send
+                url: '<?= base_url('kontak/import_submit') ?>', // Url to which the request is send
                 type: "POST", // Type of request to be send, called as method
                 data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
                 contentType: false, // The content type used when sending data to the server.
@@ -104,7 +104,7 @@
                 success: function(data) // A function to be called if request succeeds
                 {
                     if (data.success) {
-                        window.location = '<?= base_url('item/') ?>';
+                        window.location = '<?= base_url('kontak/') ?>';
                         console.log(data);
                     } else {
                         toastr.error(data.message);
@@ -132,7 +132,5 @@
                 }
             });
         });
-
-
     });
 </script>

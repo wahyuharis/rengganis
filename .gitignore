@@ -20,7 +20,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /uploads/*
 /lte/
 /assets/upload/*
-/import/upload/*
+/import/upload/*.xlsx
 
 # IDE Files
 #-------------------------

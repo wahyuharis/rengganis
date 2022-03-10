@@ -32,7 +32,6 @@ class Item extends CI_Controller
             'Harga Jual',
             'Harga Beli',
             'Kategori',
-
         );
 
         // $datatables->set_add_url(base_url($this->url_controller . '/add'));
@@ -40,8 +39,10 @@ class Item extends CI_Controller
         $datatables->set_url_serverside($this->url_controller . '/datatables_serverside');
         // $datatables->set_filter_form('#filter-dtt-list');
 
+        $html = load_view_html('item/item_list');
+        $datatables->set_custom_button_html($html);
+
         $html = '';
-        $html .= load_view_html('item/item_list');
         $html .= $datatables->htmltable();;
 
         $template->set_content_html($html);
@@ -283,7 +284,7 @@ class Item extends CI_Controller
         }
 
         $foto = in_post('foto');
-        if ($success && strlen(trim($foto))>0 ) {
+        if ($success && strlen(trim($foto)) > 0) {
             $foto_arr = explode('.', $foto);
             $foto_ext = end($foto_arr);
             $foto_ext = strtolower($foto_ext);
@@ -297,7 +298,7 @@ class Item extends CI_Controller
         }
 
         $documen = in_post('document');
-        if ($success && strlen(trim($documen))>0 ) {
+        if ($success && strlen(trim($documen)) > 0) {
             $documen_arr = explode('.', $documen);
             $documen_ext = end($documen_arr);
             $documen_ext = strtolower($documen_ext);
@@ -362,7 +363,7 @@ class Item extends CI_Controller
                 }
             }
             $this->db->trans_complete();
-            $this->session->set_flashdata('success_message','Data Telah Berhasil Di Simpan');
+            $this->session->set_flashdata('success_message', 'Data Telah Berhasil Di Simpan');
         }
 
 
@@ -379,7 +380,7 @@ class Item extends CI_Controller
     {
         $template = new LTE_Temp();
 
-        $template->set_content('home');
+        // $template->set_content('home');
         $template->set_title_page('Import Item');
 
         $data_view = array();

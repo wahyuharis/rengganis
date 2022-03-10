@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Kontak extends CI_Controller
 {
 
@@ -30,11 +33,13 @@ class Kontak extends CI_Controller
             'Kota'
         );
 
-        $datatables->set_add_url(base_url($this->base_url_controller.'/add'));
+        // $datatables->set_add_url(base_url($this->base_url_controller.'/add'));
         $datatables->set_column_title($column_title);
         $datatables->set_url_serverside($this->base_url_controller.'/datatables_serverside');
         // $datatables->set_filter_form('#filter-dtt-list');
 
+		$html=load_view_html('kontak/kontak_list_button');
+		$datatables->set_custom_button_html($html);
         $html = '';
         // $html .= load_view_html('user/user_list_filter');
         $html .= $datatables->htmltable();;
@@ -286,4 +291,133 @@ class Kontak extends CI_Controller
 		//send response
 		$form_templib->response_submit();
 	}
+
+	function import()
+    {
+		$template = new LTE_Temp();
+
+        // $template->set_content('home');
+        $template->set_title_page('Import Kontak');
+
+        $data_view = array();
+        $html = load_view_html('kontak/kontak_import', $data_view);
+
+        $template->set_content_html($html);
+
+        $template->run();
+    }
+
+	function import_submit(){
+		$this->load->library('Form_templib');
+        $form_templib = new Form_templib();
+        //end init
+
+        //declare response
+        $error = array();
+        $success = false;
+        $message = '';
+        $data = array();
+
+        $post_data = $this->input->post();
+        $truncate_table = in_post('truncate_table');
+
+        $config['upload_path']          = './import/upload/';
+        $config['allowed_types']        = 'xlsx';
+        $config['file_name']        = 'kontak_' . uniqid();
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('excel_import')) {
+            $message = $this->upload->display_errors();
+        } else {
+            $upload_data = $this->upload->data();
+            $success = true;
+        }
+
+        // print_r2($truncate_table);
+        if (empty(trim($truncate_table))) {
+            $success = false;
+            $message = "<p>Anda Belum Menentukan apakah tabel akan dikosongkan atau tidak</p>";
+        }
+
+        if ($success) {
+            $file_name = $upload_data['file_name'];
+            $spreadsheet = new Spreadsheet();
+
+            $inputFileType = 'Xlsx';
+            $inputFileName = './import/upload/' . $file_name;
+
+            /**  Create a new Reader of the type defined in $inputFileType  **/
+            $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
+            /**  Advise the Reader that we only want to load cell data  **/
+            $reader->setReadDataOnly(true);
+
+            $reader->setLoadSheetsOnly('KONTAK_IMPORT');
+            $spreadsheet = $reader->load($inputFileName);
+
+            $worksheet = $spreadsheet->getActiveSheet();
+            // echo "<pre>";
+            $excel_data = $worksheet->toArray();
+
+            // print_r2($excel_data);
+            //CHECK FORMAT
+
+            if (is_array($excel_data)) {
+                $success = true;
+            } else {
+                $success = false;
+                $message = "Data Excel Tidak Terbaca";
+            }
+
+            if ($success) {
+                $i = 0;
+                // $buff=array();
+                $this->db->trans_start();
+                if ($truncate_table == 'Y') {
+                    $this->db->truncate('kontak');
+                }
+
+                foreach ($excel_data as $row) {
+                    if ($i > 3) { //iteration start
+                        $set['nama_kontak'] = trim($row[1]);
+                        $set['jenis_kontak'] = trim($row[2]);
+                        $set['telphone_kantor'] = trim($row[3]);
+                        $set['whatsapp'] = trim($row[4]);
+                        $set['email'] = trim($row[5]);
+                        $set['kota'] = trim($row[6]);
+                        $set['alamat'] = trim($row[7]);
+
+                        $import_process = true;
+                        if (empty(trim($row[1]))) {
+                            $import_process = false;
+                        }
+                        if (empty(trim($row[2]))) {
+                            $import_process = false;
+                        }
+                        if (empty(trim($row[3]))) {
+                            $import_process = false;
+                        }
+                        
+
+                        if ($import_process) {
+                            $this->db->insert('kontak', $set);
+                        }
+                    }
+                    $i++;
+                }
+                $this->session->set_flashdata('success_message', 'Data Telah Berhasil Di import');
+                $this->db->trans_complete();
+                // print_r2($buff);
+            }
+        }
+
+
+
+        $form_templib->set_response_data($data);
+        $form_templib->set_response_error($error);
+        $form_templib->set_response_message($message);
+        $form_templib->set_response_success($success);
+        //send response
+        $form_templib->response_submit();
+	}
+
+
 }

@@ -7,6 +7,7 @@ class Datatables_templib
 	private $url_serverside = '';
 	private $order_arr = false;
 	private $add_url = false;
+	private $custom_button_html=false;
 	private $filter_form_id = false;
 	private $total_row = false;
 
@@ -30,6 +31,11 @@ class Datatables_templib
 	function set_total_row($total_row = 0)
 	{
 		$this->total_row = $total_row;
+		return $this;
+	}
+
+	function set_custom_button_html($html){
+		$this->custom_button_html=$html;
 		return $this;
 	}
 
@@ -129,6 +135,7 @@ class Datatables_templib
 		$content_data['filter_form_id'] = $this->filter_form_id;
 		$content_data['thead'] = $column_title;
 		$content_data['add_url'] = $this->add_url;
+		$content_data['custom_button_html']=$this->custom_button_html;
 		$content_data['url_serverside'] = $this->url_serverside;
 
 		return $ci->load->view('template/datatables_temp', $content_data, true);

@@ -7,10 +7,16 @@
             <!-- /.card-header -->
             <div class="card-body">
 
-                <?php if ($add_url) { ?>
-                    <a id="btn_add_def" href="<?= $add_url ?>" class="btn btn-primary"> Add </a>
 
-                <?php } ?>
+
+                <div id="btn-group-custom" class="btn-group" role="group" aria-label="Basic example">
+                    <?php if ($custom_button_html) { ?>
+                        <?=$custom_button_html?>
+                    <?php } ?>
+                    <?php if ($add_url) { ?>
+                        <a id="btn_add_def" href="<?= $add_url ?>" class="btn btn-primary"> Add </a>
+                    <?php } ?>
+                </div>
 
                 <table id="dtt_table" class="table table-bordered table-striped">
                     <thead>
@@ -38,7 +44,7 @@
 
         var table = $('#dtt_table').DataTable({
             "dom": "<'row mb-4'<'col-6 add_btn_class'><'col-6 text-right'B>>" + "<'row'<'col-sm-6'l><'col-sm-6'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-            "buttons": ["refresh","copy", "csv", "excel", "pdf"],
+            "buttons": ["refresh", "copy", "csv", "excel", "pdf"],
             "pagingType": "full",
             "serverSide": true,
             "processing": true,
@@ -63,9 +69,10 @@
                 delete_handler();
             },
             "initComplete": function(settings, json) {
-                // $('#btn_add_def').appendTo('.add_btn_class');
-                $("#item_list_custom_button").appendTo(".add_btn_class");
-                $("#item_list_custom_button").removeClass('d-none');
+                $('#btn-group-custom').appendTo('.add_btn_class');
+                // $("#item_list_custom_button").appendTo(".add_btn_class");
+                // $("#item_list_custom_button").removeClass('d-none');
+                // f_init_complete();
 
             },
             "language": {
