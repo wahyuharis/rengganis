@@ -83,7 +83,7 @@ class Item extends CI_Controller
         $action_btn = '';
 
         $action_btn .= '<div style="width:110px">';
-        $action_btn .= '<a href="' . base_url($this->url_controller . '/edit/' . $row['id_item']) . '" 
+        $action_btn .= '<a href="' . base_url($this->url_controller . '/edit/' . encode_key($row['id_item']) ). '" 
 						class="btn btn-primary btn-sm" >Edit</a>';
         $action_btn .= ' <a href="#"  delete_id="' . $row['id_item'] . '"
 						delete_action="' . base_url($this->url_controller . "/delete_submit/") . '"
@@ -151,6 +151,7 @@ class Item extends CI_Controller
 
     function edit($primary_id = '')
     {
+        $primary_id=decode_key($primary_id);
         $this->load->library('Form_templib');
         $item_model = new Item_model();
 

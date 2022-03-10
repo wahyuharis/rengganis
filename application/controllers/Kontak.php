@@ -78,7 +78,7 @@ class Kontak extends CI_Controller
     }
     function _callback_action($row)
     {
-        $action_btn = '<a href="' . base_url($this->base_url_controller.'/edit/' . $row['id_kontak']) . '" 
+        $action_btn = '<a href="' . base_url($this->base_url_controller.'/edit/' .  encode_key( $row['id_kontak']) ) . '" 
 						class="btn btn-primary btn-sm" >Edit</a>';
         $action_btn .= ' <a href="#"  delete_id="' . $row['id_kontak'] . '"
 						delete_action="' . base_url($this->base_url_controller."/delete_submit/") . '"
@@ -118,6 +118,8 @@ class Kontak extends CI_Controller
 
 	function edit($primary_id = '')
 	{
+        $primary_id=decode_key($primary_id);
+
 		$this->load->library('Form_templib');
 		$kontak_model = new Kontak_model();
 
