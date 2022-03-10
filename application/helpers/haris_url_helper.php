@@ -1,21 +1,22 @@
 <?php
 
-function haris_checkMatch_url($current_url,$allow_url)
+function haris_checkMatch_url($current_url,$block_url)
 {
     $current_url = strtolower(trim($current_url, '/'));
-    $allow_url = strtolower(trim($allow_url, '/'));
+    $block_url = strtolower(trim($block_url, '/'));
     $current_url_arr = explode('/', $current_url);
-    $allow_url_arr = explode('/', $allow_url);
-    $len = count($allow_url_arr);
+    $block_url_arr = explode('/', $block_url);
+    $len = count($block_url_arr);
+    $return = 1;
     for ($i = 0; $i < $len; $i++) {
-        $return = false;
-        if (isset($current_url_arr[$i]) && isset($allow_url_arr[$i])) {
-            if ($current_url_arr[$i] == $allow_url_arr[$i]) {
-                $return = true;
-            } else {
-                $i = $len;
-                $return = false;
-            }
+        if (isset($current_url_arr[$i]) && isset($block_url_arr[$i])) {
+            if ($current_url_arr[$i] == $block_url_arr[$i]) {
+                $return = 0;
+            } 
+            // else {
+            //     $i = $len;
+            //     $return = false;
+            // }
         }
     }
     return $return;

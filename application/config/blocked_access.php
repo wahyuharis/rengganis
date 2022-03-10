@@ -16,5 +16,6 @@ misal '/jabatan/add','/jabatan/edit', dst
 
 */
 $config['admin'] =  array(
-    // '/jabatan/'
+    '/user/',
+    '/jabatan/'
 );

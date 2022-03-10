@@ -6,55 +6,48 @@ class Auth_Hak_Akses
     {
 
         $ci = &get_instance();
-        $ci->config->load('hak_akses');
+        $ci->config->load('blocked_access');
         // $url = $ci->uri->segment(1) . '/' . $ci->uri->segment(2);
         $url = uri_string();
         $url = trim($url, '/');
         $jabatan = $ci->session->userdata('nama_jabatan');
-        $hak_akses_list =  $ci->config->item($jabatan);
+        $block_list =  $ci->config->item($jabatan);
 
         // print_r2($hak_akses_list);
 
         $allow = false;
-        
+
         if ($jabatan == 'superadmin') {
             $allow = true;
-        }
-        elseif( is_null($hak_akses_list) ){
-            $allow=false;
-        }
-        else {
-            $allow =  $this->checkUrlWildcard($url, $hak_akses_list);
+        } elseif (is_null($block_list)) {
+            $allow = false;
+        } else {
+            $allow =  $this->check_is_blocked($url, $block_list);
         }
 
 
         return $allow;
     }
 
-    function checkUrlWildcard($url, $whiteListUrls = [])
+    function check_is_blocked($url, $block_list = [])
     {
         $ci = &get_instance();
-        $ci->load->helper('haris_url');
+        // $ci->load->helper('haris_url');
 
         $url = trim($url, '/');
         //========================
 
 
-        foreach ($whiteListUrls as $wUrl) {
-            $wUrl = trim($wUrl, '/');
+        foreach ($block_list as $bUrl) {
+            $bUrl = trim($bUrl, '/');
 
-            // $pattern = preg_quote($wUrl, '/');
-            // $pattern = str_replace('\*', '.*', $pattern);
-            // $matched = preg_match('/^' . $pattern . '$/i', $url);
+            echo $bUrl;
+            echo "<br>";
+            echo $url;
+            echo "<br>";
+            echo "<br>";
 
-            // print_r2($pattern."-".$url);
-
-            // if ($matched > 0) {
-            //     return true;
-            // }
-            return  haris_checkMatch_url($url, $wUrl);
         }
-
-        return false;
+        die();
     }
 }
