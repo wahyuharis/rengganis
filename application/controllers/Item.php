@@ -26,7 +26,8 @@ class Item extends CI_Controller
         //generate culumn title
         $column_title = array(
             'id_item',
-            'kode',
+            'Barcode',
+            'Foto',
             'Nama Item',
             'Satuan',
             'Harga Jual',
@@ -119,6 +120,12 @@ class Item extends CI_Controller
             }
 
             $val = '<div style="width:180px;display:block;" >' . $html_res . '</div>';
+        }
+
+        if ($key == 'foto') {
+            if (!empty(trim($val))) {
+                $val = '<img width="50" height="50" src="' . base_url('uploads/thumbs/' . $val) . '" >';
+            }
         }
 
         return $val;
@@ -270,7 +277,7 @@ class Item extends CI_Controller
         $this->form_validation->set_data($post_data);
 
 
-        $this->form_validation->set_rules('kode_item', ucwords('kode item'), 'trim|required|min_length[5]');
+        // $this->form_validation->set_rules('kode_item', ucwords('kode item'), 'trim|required|min_length[5]');
         $this->form_validation->set_rules('item_nama', ucwords('nama item'), 'trim|required|min_length[5]');
         $this->form_validation->set_rules('satuan', ucwords('satuan'), 'trim|required|min_length[1]');
 

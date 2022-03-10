@@ -40,14 +40,7 @@
                     </a>
                 </div>
                 <div class="col-4">
-                    <?php
-                    $attr_delete = '';
-                    if (!empty(trim($value))) {
-                        $attr_delete = ' file_name="' . $value . '" ';
-                    }
-
-                    ?>
-                    <span id="delete_file_<?= $name ?>" <?=$attr_delete?> class="btn btn-danger d-none">Delete</span>
+                    <span id="delete_file_<?= $name ?>" class="btn btn-danger d-none">Delete</span>
                 </div>
                 <div class="col-4">
 
@@ -114,7 +107,7 @@
                 //fd.append("CustomField", "This is some extra data");
                 JsLoadingOverlay.show();
                 $.ajax({
-                    url: '<?= base_url('upload_templib/upload_templib') ?>',
+                    url: '<?= base_url('upload_templib/upload_templib/image_upload') ?>',
                     type: 'POST',
                     data: fd,
                     success: function(response) {

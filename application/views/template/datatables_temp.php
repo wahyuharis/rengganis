@@ -18,7 +18,7 @@
                     <?php } ?>
                 </div>
 
-                <table id="dtt_table" class="table table-bordered table-striped">
+                <table width="100%" id="dtt_table" class="table table-bordered table-striped">
                     <thead>
                         <?php foreach ($thead as $th) { ?>
                             <th><?= $th ?></th>

@@ -10,13 +10,13 @@ class Item_model extends CI_Model
         $order = array(
             'item.id_item',
             'item.kode_item',
+            'item.foto',
             'item.item_nama',
             'item.satuan',
             'item.harga_jual',
             'item.harga_beli',
             'item_jenis_imp_f(item.id_item)',
-            'item.foto',
-            'item.document'
+           
         );
 
         return $order;
@@ -28,13 +28,13 @@ class Item_model extends CI_Model
         $sql = "SELECT 
         item.id_item, 
         item.kode_item,
+        item.foto, 
         item.item_nama,
          item.satuan, 
          item.harga_jual, 
          item.harga_beli,
-         item_jenis_imp_f(item.id_item) AS jenis_item,
-         item.foto, 
-         item.document 
+         item_jenis_imp_f(item.id_item) AS jenis_item
+       
          FROM item 
         
          WHERE item.deleted=0 
