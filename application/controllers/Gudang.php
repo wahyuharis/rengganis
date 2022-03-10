@@ -71,7 +71,7 @@ class Gudang extends CI_Controller
     }
     function _callback_action($row)
     {
-        $action_btn = '<a href="' . base_url($this->url_controller . '/edit/' . $row['id_gudang']) . '" 
+        $action_btn = '<a href="' . base_url($this->url_controller . '/edit/' . encode_key($row['id_gudang'])) . '" 
 						class="btn btn-primary btn-sm" >Edit</a>';
         $action_btn .= ' <a href="#"  delete_id="' . $row['id_gudang'] . '"
 						delete_action="' . base_url($this->url_controller . "/delete_submit/") . '"
@@ -83,7 +83,7 @@ class Gudang extends CI_Controller
     {
 
         if ($key == 'allow_delete') {
-            $val ='';
+            $val = '';
             if (intval($row['allow_delete']) == 0) {
                 $val = '<i class="fas fa-lock"></i>';
             }
@@ -121,6 +121,15 @@ class Gudang extends CI_Controller
 
     function edit($primary_id = '')
     {
+        if (!empty(trim($primary_id))) {
+            $primary_id = decode_key($primary_id);
+
+            $deleted = get_row('gudang', ['id_gudang' => $primary_id])['deleted'];
+            if (intval($deleted)) {
+                $this->session->set_flashdata('error_message', 'Data Telah Dihapus');
+                redirect('gudang');
+            }
+        }
         $this->load->library('Form_templib');
         $gudang_model = new Gudang_model();
 
@@ -250,8 +259,7 @@ class Gudang extends CI_Controller
                 );
                 $this->db->update('gudang', $set, $where);
             }
-			$this->session->set_flashdata('success_message','Data Telah Tersimpan');
-
+            $this->session->set_flashdata('success_message', 'Data Telah Tersimpan');
         }
 
 
@@ -263,6 +271,4 @@ class Gudang extends CI_Controller
         //send response
         $form_templib->response_submit();
     }
-
-    
 }

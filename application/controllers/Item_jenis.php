@@ -23,7 +23,7 @@ class Item_jenis extends CI_Controller
         $column_title = array(
             'id_item_jenis',
             'jenis item',
-           
+
         );
 
         $datatables->set_add_url(base_url($this->url_controller . '/add'));
@@ -70,7 +70,7 @@ class Item_jenis extends CI_Controller
 
     function _callback_action($row)
     {
-        $action_btn = '<a href="' . base_url($this->url_controller . '/edit/' . $row['id_item_jenis']) . '" 
+        $action_btn = '<a href="' . base_url($this->url_controller . '/edit/' . encode_key($row['id_item_jenis'])) . '" 
 						class="btn btn-primary btn-sm" >Edit</a>';
         $action_btn .= ' <a href="#"  delete_id="' . $row['id_item_jenis'] . '"
 						delete_action="' . base_url($this->url_controller . "/delete_submit/") . '"
@@ -82,7 +82,7 @@ class Item_jenis extends CI_Controller
     {
 
         if ($key == 'allow_delete') {
-            $val ='';
+            $val = '';
             if (intval($row['allow_delete']) == 0) {
                 $val = '<i class="fas fa-lock"></i>';
             }
@@ -91,7 +91,7 @@ class Item_jenis extends CI_Controller
         return $val;
     }
 
-    
+
     function add()
     {
         $this->edit('');
@@ -99,6 +99,16 @@ class Item_jenis extends CI_Controller
 
     function edit($primary_id = '')
     {
+        if (!empty(trim($primary_id))) {
+            $primary_id = decode_key($primary_id);
+
+            $deleted = get_row('item_jenis', ['id_item_jenis' => $primary_id])['deleted'];
+            if (intval($deleted)) {
+                $this->session->set_flashdata('error_message', 'Data Telah Dihapus');
+                redirect('item_jenis');
+            }
+        }
+
         $this->load->library('Form_templib');
         $item_jenis = new Item_jenis_model();
 
@@ -123,7 +133,6 @@ class Item_jenis extends CI_Controller
             if ($row_data) {
                 $form['id_item_jenis'] = $row_data['id_item_jenis'];
                 $form['item_jenis_nama'] = $row_data['item_jenis_nama'];
-
             }
         }
 
@@ -200,8 +209,7 @@ class Item_jenis extends CI_Controller
                 );
                 $this->db->update('item_jenis', $set, $where);
             }
-			$this->session->set_flashdata('success_message','Data Telah Tersimpan');
-
+            $this->session->set_flashdata('success_message', 'Data Telah Tersimpan');
         }
 
 
@@ -225,7 +233,7 @@ class Item_jenis extends CI_Controller
         // $allow_delete = get_row('gudang', ['id_gudang' => $id])['allow_delete'];
 
         // if ($allow_delete) {
-            $this->db->update('item_jenis', ['deleted' => 1], ['id_item_jenis' => $id]);
+        $this->db->update('item_jenis', ['deleted' => 1], ['id_item_jenis' => $id]);
         // }
 
         $response = array(
