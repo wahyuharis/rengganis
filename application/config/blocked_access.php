@@ -6,16 +6,18 @@ terus masukin nama_jabatan -nya disini
 
 caranya
 $config[nama_jabatan(varchar)]=array(
-    allow_url(varchar),
-    allow_url(varchar),
-    allow_url(varchar),
+    blok_url(varchar),
+    blok_url(varchar),
+    blok_url(varchar),
 )
 
-allow url yang singkat misal '/jabatan/' maka url dibelakangnya akan di allow juga
-misal '/jabatan/add','/jabatan/edit', dst
+url dengan isi /user/* maka url /user/add,/user/edit, dst akan di blok juga
+
+
 
 */
 $config['admin'] =  array(
     '/user/',
     '/jabatan/'
 );
+

@@ -22,7 +22,15 @@ class Auth_Hak_Akses
         } elseif (is_null($block_list)) {
             $allow = false;
         } else {
-            $allow =  $this->check_is_blocked($url, $block_list);
+            $blocked =  $this->check_is_blocked($url, $block_list);
+
+            // var_dump2($blocked);
+
+            if ($blocked > 0) {
+                $allow = false;
+            } else {
+                $allow = true;
+            }
         }
 
 
@@ -35,19 +43,67 @@ class Auth_Hak_Akses
         // $ci->load->helper('haris_url');
 
         $url = trim($url, '/');
+        $url = strtolower($url);
         //========================
+        // echo "<pre>";
 
-
+        $count_same1 = array();
         foreach ($block_list as $bUrl) {
             $bUrl = trim($bUrl, '/');
+            $bUrl = strtolower($bUrl);
 
-            echo $bUrl;
-            echo "<br>";
-            echo $url;
-            echo "<br>";
-            echo "<br>";
+            $bUrl_arr = explode('/', $bUrl);
+            $url_arr = explode('/', $url);
 
+            $len_burl = count($bUrl_arr);
+            $len_url = count($url_arr);
+            $len_biggest = 0;
+            if ($len_burl > $len_url) {
+                $len_biggest = $len_burl;
+            } else {
+                $len_biggest = $len_url;
+            }
+
+            // var_dump2($len_biggest);
+            $count_same = array();
+            for ($i = 0; $i < $len_biggest; $i++) {
+                if (isset($url_arr[$i]) && isset($bUrl_arr[$i])) {
+                    if ($url_arr[$i] == $bUrl_arr[$i]) {
+                        // echo  $url_arr[$i] ." ". $bUrl_arr[$i]."-".$i."<br>";
+                        // echo " ".$i."<br>";
+                        // die();
+                        array_push($count_same, 1);
+                    } elseif ((count($count_same) > 0) && ($bUrl_arr[$len_burl - 1] == '*')) {
+                        array_push($count_same, 1);
+                        $i = $len_biggest;
+                    } else {
+                        array_push($count_same, 0);
+                    }
+                } else {
+                    array_push($count_same, 0);
+                }
+            }
+
+            // print_r($count_same);
+            // echo "<hr>";
+
+            $is_same = 1;
+            if (count($count_same) < 1) {
+                $is_same = 0;
+            }
+            foreach ($count_same as $sm) {
+                $is_same = $is_same * $sm;
+            }
+            array_push($count_same1, $is_same);
         }
-        die();
+        $return = 0;
+        // die();
+        // print_r2($count_same1);
+        foreach ($count_same1 as $sm1) {
+            if ($sm1 > 0) {
+                $return = 1;
+            }
+        }
+        return $return;
     }
 }
