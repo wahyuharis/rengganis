@@ -175,6 +175,8 @@ class Datatables_templib
 		$sql = $this->sql;
 
 
+		// print_r2($_GET);
+
 		$total_row = 0;
 		if (!$this->total_row) {
 			$db0 = $ci->db->query($sql);
